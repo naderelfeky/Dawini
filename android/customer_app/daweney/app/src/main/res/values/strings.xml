@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Daweney</string>
+    <string name="daweney">Daweney</string>
+    <string name="welcome_text">Ease of ordering and finding nursing and medical services</string>
+    <string name="welcome">Welcome</string>
+    <string name="todo">doctor image</string>
+    <string name="password">password</string>
+    <string name="phone">phone</string>
+    <string name="confirm_pass">confirm pass</string>
+    <string name="login">login</string>
+    <string name="register">register</string>
+    <string name="don_t_have_account">don’t have an account ?</string>
+    <string name="forget_your_password">Forget your password ?</string>
+    <string name="confirm_password">confirm pass</string>
+    <string name="sign_up">Sign up</string>
+    <string name="Already_have_account">Already have an account ?</string>
+    <string name="search">search</string>
+</resources>
