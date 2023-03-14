@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_veiw">
+
+
+    <group
+        android:checkableBehavior="single"
+        android:textColor="@color/white">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/Home" />
+
+        <item
+            android:id="@+id/nav_services"
+            android:icon="@drawable/ic_baseline_medical_services_24"
+            android:title="@string/Old_Services"/>
+
+        <item
+            android:id="@+id/nav_cash"
+            android:icon="@drawable/ic_baseline_account_balance_wallet_24"
+            android:title="@string/Wallet"/>
+
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/ic_baseline_language_24"
+            android:title="@string/Language"/>
+
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_baseline_account_box_24"
+            android:title="@string/Account"/>
+
+
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/Setting"/>
+
+
+    </group>
+
+
+    <item
+        android:title="">
+
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_baseline_login_24"
+                android:title="@string/Logout"/>
+
+        </menu>
+    </item>
+</menu>

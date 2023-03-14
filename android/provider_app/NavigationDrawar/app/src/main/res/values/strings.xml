@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Dawenii</string>
+    <string name="open_nav">open Dawenii</string>
+    <string name="close_nav">close Dawenii</string>
+
+    <string name="PersonName">person name</string>
+    <string name="Contact">person@contact.com</string>
+
+    <string name="Wallet">My Wallet</string>
+    <string name="Old_Services">Old Request</string>
+    <string name="Home">Home</string>
+    <string name="Language">Language</string>
+    <string name="Account">My Account</string>
+    <string name="Setting">Setting</string>
+    <string name="Logout">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

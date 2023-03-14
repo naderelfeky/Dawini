@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">داوينى</string>
+    <string name="Setting">الاعدادات</string>
+    <string name="Account">"الحساب "</string>
+    <string name="Language">"اللغه "</string>
+    <string name="Wallet">المحفظه</string>
+    <string name="Contact">الايميل</string>
+    <string name="PersonName">الاسم</string>
+    <string name="Logout">تسجيل الخروج</string>
+    <string name="Home">الرئيسيه</string>
+    <string name="Old_Services">الخدمات السابقه</string>
+</resources>
