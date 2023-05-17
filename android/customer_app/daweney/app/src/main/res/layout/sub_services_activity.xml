@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/navy_blue"
-    tools:context=".SubServicesActivity">
+    tools:context=".view.SubServicesActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:gravity="center_vertical"
             >
             <ImageView
+                android:id="@+id/backward"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentStart="true"
@@ -37,7 +38,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/control_button"
                 android:padding="4dp"
-                android:src="@drawable/ic_setting" />
+                android:src="@drawable/ic_search" />
 
         </RelativeLayout>
         <LinearLayout

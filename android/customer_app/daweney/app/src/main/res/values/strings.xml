@@ -9,10 +9,25 @@
     <string name="confirm_pass">confirm pass</string>
     <string name="login">login</string>
     <string name="register">register</string>
-    <string name="don_t_have_account">don’t have an account ?</string>
-    <string name="forget_your_password">Forget your password ?</string>
+    <string name="don_t_have_account">Don’t have account?</string>
+    <string name="forget_your_password">Forgot password?</string>
     <string name="confirm_password">confirm pass</string>
     <string name="sign_up">Sign up</string>
     <string name="Already_have_account">Already have an account ?</string>
     <string name="search">search</string>
+    <string name="username">username</string>
+    <string name="mail">Email</string>
+    <string name="error">Error</string>
+    <string name="pin_view">pinview</string>
+    <string name="send">send</string>
+    <string name="verify_account">Verify Account</string>
+    <string name="email_temp">ex**2@gmail.com</string>
+    <string name="enter_email">Enter you email address below to reset your password</string>
+    <string name="didn_t_receive_code">Didn’t get the code </string>
+    <string name="resend">Resend Code?</string>
+    <string name="sent_code_to_you_email">sent code to you email:</string>
+    <string name="email_verification">Email Verification</string>
+    <string name="reset_password">reset password</string>
+    <string name="new_password">new password</string>
+    <string name="send_code">send code</string>
 </resources>

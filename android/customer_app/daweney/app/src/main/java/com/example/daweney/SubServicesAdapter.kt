@@ -13,15 +13,16 @@ class SubServicesAdapter(context:Context,subServices: ArrayList<SubServices>): A
 
   override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-    var list=LayoutInflater.from(context).inflate(R.layout.subservices_list_row,parent,false)
-
-
-    var item =getItem(position)
+    var list:View?=convertView
+    if(convertView==null){
+      list=LayoutInflater.from(context).inflate(R.layout.subservices_list_row,parent,false)
+    }
+    val item =getItem(position)
 
       list?.TV_SubServices_name?.text=item?.name
       list?.subServices_img?.setImageResource(item?.img?:R.drawable.doctor)
 
 
-    return list
+    return list!!
   }
 }

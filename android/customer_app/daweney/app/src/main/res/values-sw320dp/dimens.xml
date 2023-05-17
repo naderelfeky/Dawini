@@ -19,8 +19,8 @@
     <!--    login_screen     -->
     <dimen name="btn_login_width">250dp</dimen>
     <dimen name="btn_login_height">48dp</dimen>
-    <dimen name="ET_width">280dp</dimen>
-    <dimen name="ET_height">48dp</dimen>
+    <dimen name="ET_width">320dp</dimen>
+    <dimen name="ET_height">60dp</dimen>
     <dimen name="ET_padding">10dp</dimen>
     <dimen name="ET_drawable_padding">16dp</dimen>
     <dimen name="dis_between_two_string">10dp</dimen>
