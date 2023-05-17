@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:fillViewport="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/navy_blue"
+        android:gravity="center"
+        tools:context=".view.VerifiedActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="100"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="45"
+                android:gravity="bottom"
+                android:background="@drawable/linear_blue_sky_color_shape">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|bottom"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/doctor"
+                    tools:ignore="ImageContrastCheck,ImageContrastCheck,ImageContrastCheck" />
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="10"
+                >
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/progressBar"
+                    android:visibility="invisible"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/email_verification"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@color/light_blue_100"
+                    android:textSize="@dimen/first_text_size"
+                    android:layout_gravity="center_horizontal" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="20"
+                android:gravity="center|bottom"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/sent_code_to_you_email"
+                        android:alpha=".5"
+                        android:textColor="@color/light_blue_100"
+                        android:textSize="@dimen/important_text_size"
+                        />
+                    <TextView
+                        android:id="@+id/emailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email_temp"
+                        android:textStyle="bold"
+                        android:alpha=".7"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/light_blue_100"
+                        android:textSize="@dimen/important_text_size"
+                        />
+                </LinearLayout>
+
+                <!--   Code   -->
+                <com.chaos.view.PinView
+                    android:id="@+id/pinview"
+                    style="@style/PinWidget.PinView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20sp"
+                    android:alpha=".9"
+                    android:cursorVisible="true"
+                    android:gravity="center"
+                    android:hint="@string/pin_view"
+                    android:inputType="number"
+                    android:itemBackground="@color/light_blue_100"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    app:cursorColor="@color/black"
+                    app:hideLineWhenFilled="false"
+                    app:itemCount="4"
+                    app:itemHeight="50dp"
+                    app:itemRadius="10dp"
+                    app:itemWidth="50dp"
+                    app:lineColor="@color/light_blue_100" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="10"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/didn_t_receive_code"
+                    android:alpha=".7"
+                    android:textColor="@color/light_blue_100"
+                    android:textSize="@dimen/important_text_size"
+                    />
+                    <TextView
+                    android:id="@+id/resend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/resend"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue_400"
+                    android:textSize="@dimen/important_text_size"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <Button
+                    android:id="@+id/btn_verified_code"
+                    android:layout_width="@dimen/btn_login_width"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_state"
+                    android:enabled="false"
+                    style="@style/ButtonStyle"
+                    android:text="@string/verify_account"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/Buttons_text_size"
+                    tools:ignore="TextViewEdits" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</ScrollView>

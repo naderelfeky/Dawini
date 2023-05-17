@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,23 +15,43 @@
         android:theme="@style/Theme.Daweney"
         tools:targetApi="31">
         <activity
-            android:name=".ServicesActivity"
+            android:name=".view.ForgotPassword"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SubServicesActivity"
+            android:name=".view.ResetPassword"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.VerifiedActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.ServicesActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.SubServicesActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
-            android:name=".Register"
+            android:name=".view.Register"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.Register" />
@@ -42,14 +64,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login"
+            android:name=".view.Login"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.login" />
@@ -62,7 +84,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".WelcomeScreen"
+            android:name=".view.WelcomeScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
