@@ -1,8 +1,15 @@
 package com.example.daweney.repo
 
 
-import com.example.daweney.pojo.UserClient
-import com.example.daweney.pojo.dataclass.*
+import com.example.daweney.data.UserClient
+import com.example.daweney.pojo.forgotpass.EmailUser
+import com.example.daweney.pojo.forgotpass.MsgResponse
+import com.example.daweney.pojo.login.LoginResponse
+import com.example.daweney.pojo.login.LoginUser
+import com.example.daweney.pojo.register.RegisterResponse
+import com.example.daweney.pojo.register.RegisterUser
+import com.example.daweney.pojo.resetpass.ResetPassword
+import com.example.daweney.pojo.verifyaccount.VerifyUser
 import retrofit2.Call
 
 class UserRepository {
@@ -19,10 +26,10 @@ class UserRepository {
             return UserClient.create().sendCode(email)
         }
 
-        fun verifyUser(verifyUser: VerifyUser):Call<MsgResponse>{
+        fun verifyUser(verifyUser: VerifyUser):Call<com.example.daweney.pojo.verifyaccount.MsgResponse>{
             return UserClient.create().verifyUser(verifyUser)
         }
-        fun resetPassword(resetPassword: ResetPassword):Call<MsgResponse>{
+        fun resetPassword(resetPassword: ResetPassword):Call<com.example.daweney.pojo.resetpass.MsgResponse>{
             return UserClient.create().resetPassword(resetPassword)
         }
 

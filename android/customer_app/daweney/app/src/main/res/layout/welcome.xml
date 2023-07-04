@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:weightSum="100"
     android:background="@color/navy_blue"
-    tools:context=".view.WelcomeScreen">
+    tools:context=".ui.welcome.WelcomeScreen">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

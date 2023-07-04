@@ -68,7 +68,7 @@
             android:layout_weight="80"
             android:divider="@null"
             android:dividerHeight="0dp"
-            tools:listitem="@layout/subservices_list_row"
+            tools:listitem="@layout/services_list_row"
             >
 
         </ListView>
