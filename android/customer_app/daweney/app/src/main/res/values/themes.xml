@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Daweney" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -15,6 +15,13 @@
         <item name="android:statusBarColor">@color/navy_blue</item>
 
         <!-- Customize your theme here. -->
+
+        <!--progressBarColor-->
+        <item name="android:indeterminateTint">@color/progressBarColor</item>
+
+        <!--background-->
+        <item name="android:windowBackground">@drawable/linear_blue_sky_color_shape</item>
+
         <item name="textAppearanceCaption">@style/InputText</item>
         <item name="buttonCompat">@style/ButtonStyle</item>
         <item name="floatingActionButtonStyle">@style/FloatingActionButtonStyle</item>
@@ -39,20 +46,46 @@
         <!-- add any other properties you want to customize -->
     </style>
 
-                         <!-- button-->
+    <!--textView-->
+    <style name="TextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_view_color</item>
+    </style>
+
+    <!--normal text size-->
+    <style name="NormalTextViewStyle" parent="TextViewStyle">
+        <item name="android:textSize">@dimen/normal_text_size</item>
+    </style>
+
+    <!--Important text size-->
+    <style name="ImportantTextViewStyle" parent="TextViewStyle">
+        <item name="android:textSize">@dimen/important_text_size</item>
+    </style>
+
+    <!--line -->
+    <style name="line" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@color/light_blue_400</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">3dp</item>
+    </style>
+
+    <!-- button-->
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/button_state</item>
         <item name="backgroundTint">@null</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:textSize">16sp</item>
     </style>
                        <!--float button-->
     <style name="FloatingActionButtonStyle" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="tint">@null</item>
-        <item name="srcCompat">@drawable/floating_square_button</item>
+        <item name="elevation">12dp</item>
     </style>
-<!--                 &lt;!&ndash;   Dialog   &ndash;&gt;-->
+
+    <!--label style-->
+    <style name="LabelStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/label_text_size</item>
+    </style>
+
+    <!--                 &lt;!&ndash;   Dialog   &ndash;&gt;-->
 <!--    <style name="MyDialogTheme" parent="@android:style/Theme.Dialog">-->
 <!--        <item name="backgroundTint">@null</item>-->
 <!--&lt;!&ndash;        <item name="android:dialogMessage">@null</item>&ndash;&gt;-->

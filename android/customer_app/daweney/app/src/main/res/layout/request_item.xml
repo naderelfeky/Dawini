@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:elevation="12dp"
+    android:alpha=".9">
+    <FrameLayout
+        android:id="@+id/requestBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linear_blue_lightblue_color"
+        >
+        <!--body-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/linear_navy_blue"
+            android:layout_marginStart="10dp"
+            android:baselineAligned="false">
+            <!--request info-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="20dp">
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    tools:ignore="UseCompoundDrawables">
+                    <ImageView
+                        android:id="@+id/serviceTypeImg"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/doctor"
+                        android:background="@drawable/custom_circle_shape"
+                        android:gravity="center"
+                        android:contentDescription="@string/app_name" />
+
+                    <TextView
+                        android:id="@+id/serviceType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/service_type"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        />
+
+                </LinearLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:weightSum="5"
+                    android:baselineAligned="false">
+                    <!--request service-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="match_parent"
+                        android:paddingEnd="10dp"
+                        android:orientation="vertical">
+                        <androidx.constraintlayout.utils.widget.MotionLabel
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/request_services"
+                            android:layout_gravity="start"
+                            android:textColor="@color/light_blue_100"
+                            />
+                        <TextView
+                            android:id="@+id/requestServices"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/service_name"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            />
+
+
+
+                    </LinearLayout>
+                    <!--data and time-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/requestDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:minHeight="48dp"
+                            android:text="@string/date"
+                            android:textColor="@color/navy_blue_600"
+                            android:background="@color/light_blue_100"
+                            android:textSize="18sp" />
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"/>
+
+                        <TextView
+                            android:id="@+id/requestTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:minHeight="48dp"
+                            android:text="@string/time"
+                            android:textColor="@color/navy_blue_600"
+                            android:background="@color/light_blue_100"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+
+</androidx.cardview.widget.CardView>

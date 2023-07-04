@@ -24,6 +24,8 @@
     <dimen name="ET_drawable_padding">22dp</dimen>
     <dimen name="dis_between_two_string">10dp</dimen>
 
+    <!--label text-->
+    <dimen name="label_text_size">18sp</dimen>
 
 
 
@@ -31,6 +33,6 @@
     <dimen name="input_text_size">20sp</dimen>
     <dimen name="Buttons_text_size">20sp</dimen>
     <dimen name="first_text_size">22sp</dimen>
-    <dimen name="normal_text_size">16sp</dimen>
-    <dimen name="important_text_size">18sp</dimen>
+    <dimen name="normal_text_size">18sp</dimen>
+    <dimen name="important_text_size">20sp</dimen>
 </resources>
