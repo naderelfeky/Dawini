@@ -11,40 +11,38 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SendCodeViewModel:ViewModel() {
+class SendCodeViewModel : ViewModel() {
 
-private val userRepository=UserRepository()
-private val _codeMutableLiveData=MutableLiveData<MsgResponse>()
-private val _progressBar= MutableLiveData<Boolean>()
-private val _emailNotFound= MutableLiveData<Boolean>()
-private val _dialogMessage= MutableLiveData("")
-  val progressBar:LiveData<Boolean>
-     get() =_progressBar
-  val emailNotFound:LiveData<Boolean>
-     get() = _emailNotFound
-  val verifyUserMutableLiveData:MutableLiveData<MsgResponse>
-     get() = _codeMutableLiveData
-  val dialogMessage:LiveData<String>
-     get() =_dialogMessage
+    private val userRepository = UserRepository()
+    private val _codeMutableLiveData = MutableLiveData<MsgResponse>()
+    private val _progressBar = MutableLiveData<Boolean>()
+    private val _emailNotFound = MutableLiveData<Boolean>()
+    private val _dialogMessage = MutableLiveData("")
+    val progressBar: LiveData<Boolean>
+        get() = _progressBar
+    val emailNotFound: LiveData<Boolean>
+        get() = _emailNotFound
+    val verifyUserMutableLiveData: MutableLiveData<MsgResponse>
+        get() = _codeMutableLiveData
+    val dialogMessage: LiveData<String>
+        get() = _dialogMessage
 
-    fun sendCode(email: String){
+    fun sendCode(email: String) {
         _progressBar.postValue(true)
-        userRepository.sendCode(EmailUser(email)).enqueue(object : Callback<MsgResponse>{
+        userRepository.sendCode(EmailUser(email)).enqueue(object : Callback<MsgResponse> {
             override fun onResponse(call: Call<MsgResponse>, response: Response<MsgResponse>) {
-                Log.d("response",email)
-                Log.d("response",response.code().toString())
-                when(response.code()){
-                    200->{
+                when (response.code()) {
+                    200 -> {
                         _codeMutableLiveData.postValue(response.body())
                     }
-                    400->{
+                    400 -> {
                         _dialogMessage.postValue("you login with google , try login with it")
                     }
-                    404->{
+                    404 -> {
                         _dialogMessage.postValue("mail not found you should register first ")
                         _emailNotFound.postValue(true)
                     }
-                    else->{
+                    else -> {
                         _dialogMessage.postValue("error , try again ")
                     }
 
@@ -55,7 +53,7 @@ private val _dialogMessage= MutableLiveData("")
             override fun onFailure(call: Call<MsgResponse>, t: Throwable) {
                 _dialogMessage.postValue("opps ,try again")
                 _progressBar.postValue(false)
-                Log.d("response",t.message.toString())
+                Log.d("response", t.message.toString())
             }
         })
     }

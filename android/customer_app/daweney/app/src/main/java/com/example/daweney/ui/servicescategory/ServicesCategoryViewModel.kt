@@ -9,47 +9,48 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ServicesCategoryViewModel():ViewModel() {
-   private val servicesCategoryResponse=ServicesCategoryRepository()
-   private val _errorMessage=MutableLiveData<String>()
-   private val _servicesCategory=MutableLiveData<ServicesCategoryResponse>()
-   private val _progressBar=MutableLiveData<Boolean>()
-   private val _failWithConnection=MutableLiveData<Boolean>()
-    val errorMessage:LiveData<String>
-        get()=_errorMessage
-    val servicesCategory:LiveData<ServicesCategoryResponse>
-        get()=_servicesCategory
+class ServicesCategoryViewModel() : ViewModel() {
+    private val servicesCategoryResponse = ServicesCategoryRepository()
+    private val _errorMessage = MutableLiveData<String>()
+    private val _servicesCategory = MutableLiveData<ServicesCategoryResponse>()
+    private val _progressBar = MutableLiveData<Boolean>()
+    private val _failWithConnection = MutableLiveData<Boolean>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+    val servicesCategory: LiveData<ServicesCategoryResponse>
+        get() = _servicesCategory
     val progressBar
         get() = _progressBar
-    val failWithConnection:LiveData<Boolean>
-    get() = _failWithConnection
+    val failWithConnection: LiveData<Boolean>
+        get() = _failWithConnection
 
-    fun getServicesCategory(){
+    fun getServicesCategory() {
         _progressBar.postValue(true)
-        servicesCategoryResponse.getServicesCategory().enqueue(object :Callback<ServicesCategoryResponse>{
+        servicesCategoryResponse.getServicesCategory()
+            .enqueue(object : Callback<ServicesCategoryResponse> {
 
-            override fun onResponse(
-                call: Call<ServicesCategoryResponse>,
-                response: Response<ServicesCategoryResponse>
-            ) {
-                when(response.code()){
-                    200->{
-                        _servicesCategory.postValue(response.body())
+                override fun onResponse(
+                    call: Call<ServicesCategoryResponse>,
+                    response: Response<ServicesCategoryResponse>
+                ) {
+                    when (response.code()) {
+                        200 -> {
+                            _servicesCategory.postValue(response.body())
 
+                        }
+                        else -> {
+                            _errorMessage.postValue("error with server try again ")
+                        }
                     }
-                    else->{
-                        _errorMessage.postValue("error with server try again ")
-                    }
+                    _progressBar.postValue(false)
+                    _failWithConnection.postValue(false)
                 }
-                _progressBar.postValue(false)
-                _failWithConnection.postValue(false)
-            }
 
-            override fun onFailure(call: Call<ServicesCategoryResponse>, t: Throwable) {
-                _failWithConnection.postValue(true)
-                _progressBar.postValue(false)
+                override fun onFailure(call: Call<ServicesCategoryResponse>, t: Throwable) {
+                    _failWithConnection.postValue(true)
+                    _progressBar.postValue(false)
 
-            }
-        })
+                }
+            })
     }
 }

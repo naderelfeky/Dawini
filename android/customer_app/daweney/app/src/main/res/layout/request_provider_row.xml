@@ -85,7 +85,7 @@
                 android:text="@string/cost" />
 
             <TextView
-                android:id="@+id/requestCost"
+                android:id="@+id/request_cost"
                 style="@style/NormalTextViewStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

@@ -1,12 +1,12 @@
 package com.example.daweney.ui.sevices
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,13 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.daweney.R
 import com.example.daweney.pojo.intent_extra_key.IntentExtraKey
 import com.example.daweney.pojo.services.ServicesBody
+import com.example.daweney.pojo.services.ServicesResponse
 import com.example.daweney.ui.dialog.CustomDialogFragment
+import com.example.daweney.ui.sendrequest.SendRequest
 import kotlinx.android.synthetic.main.activity_services.*
 
-class Services : AppCompatActivity() {
+class Services : AppCompatActivity() , ServicesInterface{
     private lateinit var servicesViewModel: ServicesViewModel
     private lateinit var servicesRecyclerView: RecyclerView
     private lateinit var servicesAdapter: ServicesAdapter
+    private lateinit var serviceType: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_services)
@@ -28,7 +31,7 @@ class Services : AppCompatActivity() {
 
         getServices()
         recyclerViewInit()
-        btn_continue.setOnClickListener { click(it) }
+        btn_continue.setOnClickListener { onClick(it) }
         getServicesObserver()
         progressBarObserver()
         onFailureObserver()
@@ -88,9 +91,22 @@ class Services : AppCompatActivity() {
             R.id.try_again_btn -> {
                 getServices()
             }
+
+            R.id.btn_continue->{
+                startSendRequestActivity()
+            }
+
         }
     }
 
+    private fun startSendRequestActivity(){
+        val intent = Intent(this, SendRequest::class.java)
+        val selectionServices=ServicesResponse()
+        selectionServices.addAll(servicesAdapter.getSelectionList())
+        intent.putExtra(IntentExtraKey.SERVICES,selectionServices)
+        intent.putExtra(IntentExtraKey.SERVICE_TYPE,serviceType)
+        startActivity(intent)
+    }
     private fun closeSearchBar() {
         val targetWidth = resources.getDimensionPixelSize(R.dimen.icon_size)
         val animator = ValueAnimator.ofInt(searchContainer.width, targetWidth)
@@ -137,30 +153,20 @@ class Services : AppCompatActivity() {
         servicesRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun click(view: View?) {
-        when (view) {
-            btn_continue -> {
-                Toast.makeText(this, "fd", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+
 
     private fun getServicesObserver() {
         servicesViewModel.services.observe(this) {
             if (it != null) {
-
-                servicesAdapter = ServicesAdapter(it)
+                servicesAdapter = ServicesAdapter(it,this)
                 servicesRecyclerView.adapter = servicesAdapter
-
             }
         }
     }
 
     private fun gerServiceType(): ServicesBody {
-        val serviceType = intent.getStringExtra(IntentExtraKey.SERVICE_TYPE).toString()
-        Toast.makeText(this, serviceType, Toast.LENGTH_SHORT).show()
-        //ToDo nnnnnanannnan
-        return ServicesBody("nurse")
+        serviceType = intent.getStringExtra(IntentExtraKey.SERVICE_TYPE).toString()
+        return ServicesBody(serviceType)
     }
 
 
@@ -182,4 +188,14 @@ class Services : AppCompatActivity() {
             }
         }
     }
+
+    override fun updateButtonState(isEnable: Boolean) {
+        if(isEnable){
+           btn_continue.visibility=ViewGroup.VISIBLE
+        }else{
+            btn_continue.visibility=ViewGroup.GONE
+        }
+    }
+
+
 }

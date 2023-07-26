@@ -10,30 +10,30 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class VerifyUserViewModel:ViewModel() {
-    private val userRepository=UserRepository()
-    private val _verifyUserMutableLiveData= MutableLiveData<MsgResponse>()
-    private val _progressBar= MutableLiveData<Boolean>()
-    private val _dialogMessage= MutableLiveData("")
+class VerifyUserViewModel : ViewModel() {
+    private val userRepository = UserRepository()
+    private val _verifyUserMutableLiveData = MutableLiveData<MsgResponse>()
+    private val _progressBar = MutableLiveData<Boolean>()
+    private val _dialogMessage = MutableLiveData("")
     val progressBar: LiveData<Boolean>
-        get() =_progressBar
+        get() = _progressBar
     val verifyUserMutableLiveData: MutableLiveData<MsgResponse>
         get() = _verifyUserMutableLiveData
     val dialogMessage: LiveData<String>
-        get() =_dialogMessage
+        get() = _dialogMessage
 
-    fun verifyUser(verifyUser: VerifyUser){
+    fun verifyUser(verifyUser: VerifyUser) {
         _progressBar.postValue(true)
         userRepository.verifyUser(verifyUser).enqueue(object : Callback<MsgResponse> {
             override fun onResponse(call: Call<MsgResponse>, response: Response<MsgResponse>) {
-                when(response.code()){
-                    200->{
-                       _verifyUserMutableLiveData.postValue(response.body())
+                when (response.code()) {
+                    200 -> {
+                        _verifyUserMutableLiveData.postValue(response.body())
                     }
-                    400->{
+                    400 -> {
                         _dialogMessage.postValue("code is wrong !")
                     }
-                    else->{
+                    else -> {
                         _dialogMessage.postValue("error try again")
                     }
                 }
@@ -41,8 +41,8 @@ class VerifyUserViewModel:ViewModel() {
             }
 
             override fun onFailure(call: Call<MsgResponse>, t: Throwable) {
-               _dialogMessage.postValue("failure try again")
-               _progressBar.postValue(false)
+                _dialogMessage.postValue("failure try again")
+                _progressBar.postValue(false)
             }
         })
 

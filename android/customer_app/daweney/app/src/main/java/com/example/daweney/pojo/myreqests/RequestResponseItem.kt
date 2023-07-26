@@ -11,7 +11,7 @@ data class RequestResponseItem(
     val date: String,
     val priceOfService: Int,
     val service: List<Service>,
-    val status: String,
+    var status: String,
     val typeofservice: String
 ):Parcelable{
     constructor(parcel: Parcel) : this(

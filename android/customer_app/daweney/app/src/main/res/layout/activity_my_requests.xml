@@ -43,7 +43,8 @@
                     android:layout_height="48dp"
                     android:layout_marginStart="50dp"
                     android:background="@drawable/search_background"
-                    android:hint="search hear"
+                    android:hint="@string/search_here"
+                    android:textColorHint="@color/navy_blue_400"
                     android:padding="5dp"
                     android:singleLine="true"
                     android:textColor="@color/navy_blue" />

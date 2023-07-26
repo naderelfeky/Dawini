@@ -1,3 +1,7 @@
 package com.example.daweney.pojo.services
 
-class ServicesResponse : ArrayList<ServicesResponseItem>()
+import java.io.Serializable
+
+class ServicesResponse() : ArrayList<ServicesResponseItem>(), Serializable {
+
+}
