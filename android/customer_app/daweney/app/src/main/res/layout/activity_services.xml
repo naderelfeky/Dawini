@@ -71,25 +71,6 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/btn_continue"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="18dp"
-            android:background="@color/navy_blue"
-            android:drawableEnd="@drawable/ic_left"
-            android:text="@string/continue_text" />
-
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refreshServices"
             android:layout_width="match_parent"
@@ -163,6 +144,26 @@
                 android:text="@string/try_again" />
 
         </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btn_continue"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="18dp"
+            android:background="@drawable/control_button"
+            android:drawableEnd="@drawable/ic_right"
+            android:text="@string/continue_text"
+            android:visibility="gone" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

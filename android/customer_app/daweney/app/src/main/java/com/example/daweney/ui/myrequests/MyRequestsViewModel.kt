@@ -10,33 +10,36 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyRequestsViewModel: ViewModel() {
-    private val requestRepository=RequestRepository()
-    private val _progressBar= MutableLiveData<Boolean>()
-    private val _emptyRequest= MutableLiveData<Boolean>()
-    private val _failure= MutableLiveData<Boolean>()
-    private val _myRequestsResponse= MutableLiveData<RequestResponse>()
+class MyRequestsViewModel : ViewModel() {
+    private val requestRepository = RequestRepository()
+    private val _progressBar = MutableLiveData<Boolean>()
+    private val _emptyRequest = MutableLiveData<Boolean>()
+    private val _failure = MutableLiveData<Boolean>()
+    private val _myRequestsResponse = MutableLiveData<RequestResponse>()
     val progressBar: LiveData<Boolean>
-       get() = _progressBar
-    val myRequestsResponse:LiveData<RequestResponse>
-      get() = _myRequestsResponse
-    val emptyRequest:LiveData<Boolean>
-    get() = _emptyRequest
+        get() = _progressBar
+    val myRequestsResponse: LiveData<RequestResponse>
+        get() = _myRequestsResponse
+    val emptyRequest: LiveData<Boolean>
+        get() = _emptyRequest
 
-    val failure:LiveData<Boolean>
+    val failure: LiveData<Boolean>
         get() = _failure
 
-    fun getMyRequests(requestBody: RequestBody){
+    fun getMyRequests(requestBody: RequestBody) {
 
         _progressBar.postValue(true)
-        requestRepository.getMyRequests(requestBody).enqueue(object : Callback<RequestResponse>{
-            override fun onResponse(call: Call<RequestResponse>, response: Response<RequestResponse>) {
-                when(response.code()){
-                    200->{
-                      _myRequestsResponse.postValue(response.body())
+        requestRepository.getMyRequests(requestBody).enqueue(object : Callback<RequestResponse> {
+            override fun onResponse(
+                call: Call<RequestResponse>,
+                response: Response<RequestResponse>
+            ) {
+                when (response.code()) {
+                    200 -> {
+                        _myRequestsResponse.postValue(response.body())
                     }
-                    else->{
-                      _emptyRequest.postValue(true)
+                    else -> {
+                        _emptyRequest.postValue(true)
                     }
                 }
                 _progressBar.postValue(false)

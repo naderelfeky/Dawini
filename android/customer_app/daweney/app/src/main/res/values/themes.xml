@@ -22,6 +22,7 @@
         <!--background-->
         <item name="android:windowBackground">@drawable/linear_blue_sky_color_shape</item>
 
+        <item name="colorOnSurface">@color/black</item>
         <item name="textAppearanceCaption">@style/InputText</item>
         <item name="buttonCompat">@style/ButtonStyle</item>
         <item name="floatingActionButtonStyle">@style/FloatingActionButtonStyle</item>
@@ -67,6 +68,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">3dp</item>
     </style>
+    <style name="light_line" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@color/light_blue_100</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:alpha">.5</item>
+        <item name="android:layout_height">3dp</item>
+    </style>
 
     <!-- button-->
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
@@ -80,10 +87,37 @@
         <item name="elevation">12dp</item>
     </style>
 
-    <!--label style-->
+       <!--label style-->
     <style name="LabelStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/label_text_size</item>
     </style>
+
+        <!--send request editText-->
+    <style name="SendRequestEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/light_blue_400</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1.5dp</item>
+        <item name="hintTextColor">#8FA3B0</item>
+        <item name="boxCornerRadiusBottomEnd">4dp</item>
+        <item name="boxCornerRadiusBottomStart">4dp</item>
+        <item name="boxCornerRadiusTopEnd">4dp</item>
+        <item name="boxCornerRadiusTopStart">4dp</item>
+        <item name="android:textColorHint">#E0F2F1</item>
+        <item name="startIconTint">#8FA3B0</item>
+        <item name="suffixTextAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="suffixTextColor">#8FA3B0</item>
+        <item name="prefixTextColor">#E0F2F1</item>
+        <item name="hintTextAppearance">@style/HintTextAppearance</item>
+        <item name="endIconScaleType">centerInside</item>
+        <item name="endIconTint">#E0F2F1</item>
+    </style>
+
+    <style name="DateAndTimeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/light_blue_200</item>
+        <item name="colorOnPrimary">@color/navy_blue</item>
+        <item name="android:colorControlHighlight">@color/black</item>
+    </style>
+
 
     <!--                 &lt;!&ndash;   Dialog   &ndash;&gt;-->
 <!--    <style name="MyDialogTheme" parent="@android:style/Theme.Dialog">-->

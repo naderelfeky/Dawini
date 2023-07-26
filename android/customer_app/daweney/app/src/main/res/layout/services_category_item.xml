@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/services_background"
+        android:background="@drawable/services_category_background"
         android:weightSum="10"
         android:orientation="vertical">
         <Space
@@ -22,7 +22,7 @@
             android:paddingBottom="2dp"
             android:foregroundGravity="bottom"
             android:layout_weight="6"
-            android:background="@drawable/services_img_background"
+            android:background="@drawable/services_category_img_background"
             android:src="@drawable/doctor" />
         <TextView
             android:id="@+id/TV_services"

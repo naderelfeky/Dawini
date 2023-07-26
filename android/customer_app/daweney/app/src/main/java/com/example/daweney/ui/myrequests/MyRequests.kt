@@ -33,9 +33,7 @@ class MyRequests : AppCompatActivity() ,MyRequestInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_requests)
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayShowTitleEnabled(false)
-        // recyclerView
+      // recyclerView
         recyclerView = findViewById(R.id.requestRecyclerView)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -96,6 +94,7 @@ class MyRequests : AppCompatActivity() ,MyRequestInterface {
         val intent = Intent(this, Login::class.java)
         sharedPrefVM.deleteDate(getCustomerId())
         startActivity(intent)
+        finish()
     }
 
     private fun getCustomerId(): String {
@@ -142,7 +141,7 @@ class MyRequests : AppCompatActivity() ,MyRequestInterface {
             if (it) {
                 progressBar.visibility = View.VISIBLE
             } else {
-                progressBar.visibility = View.INVISIBLE
+                progressBar.visibility = View.GONE
             }
         }
     }
@@ -212,7 +211,6 @@ class MyRequests : AppCompatActivity() ,MyRequestInterface {
     override fun onItemClick(request: RequestResponseItem) {
         val intent=Intent(this,MyRequestDetails::class.java)
         intent.putExtra(IntentExtraKey.MY_REQUEST,request)
-        Toast.makeText(this,request.date,Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }
 

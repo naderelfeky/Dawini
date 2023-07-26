@@ -85,6 +85,13 @@
         <item name="android:textSize">@dimen/label_text_size</item>
     </style>
 
+    <style name="DateAndTimeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/light_blue_200</item>
+        <item name="colorOnPrimary">@color/navy_blue</item>
+        <item name="android:colorControlHighlight">@color/black</item>
+    </style>
+
+
     <!--                 &lt;!&ndash;   Dialog   &ndash;&gt;-->
     <!--    <style name="MyDialogTheme" parent="@android:style/Theme.Dialog">-->
     <!--        <item name="backgroundTint">@null</item>-->

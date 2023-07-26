@@ -57,7 +57,8 @@ class RequestRecyclerViewAdapter (private val requests: RequestResponse,private 
         return when(status){
             "pending" ->{R.drawable.linear_red_orange_color}
             "applied" ->{R.color.light_blue_200}
-            else     ->{R.drawable.linear_sky_green_color}
+            "Accepted" ->{R.drawable.linear_sky_green_color}
+            else     ->{R.color.white}
         }
     }
 

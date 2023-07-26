@@ -5,11 +5,14 @@ import com.example.daweney.pojo.forgotpass.EmailUser
 import com.example.daweney.pojo.forgotpass.MsgResponse
 import com.example.daweney.pojo.login.LoginResponse
 import com.example.daweney.pojo.login.LoginUser
+import com.example.daweney.pojo.my_request_details.*
 import com.example.daweney.pojo.myreqests.RequestBody
 import com.example.daweney.pojo.myreqests.RequestResponse
 import com.example.daweney.pojo.register.RegisterResponse
 import com.example.daweney.pojo.register.RegisterUser
 import com.example.daweney.pojo.resetpass.ResetPassword
+import com.example.daweney.pojo.send_request.SendRequestBody
+import com.example.daweney.pojo.send_request.SendRequestResponse
 import com.example.daweney.pojo.services.ServicesBody
 import com.example.daweney.pojo.services.ServicesResponse
 import com.example.daweney.pojo.services_category.ServicesCategoryResponse
@@ -45,15 +48,21 @@ interface ApiInterface {
        @POST("findservice")
        fun getServices(@Body servicesBody: ServicesBody):Call<ServicesResponse>
 
-       @POST("")
-       fun getApplication()
-//    @POST("signin")
-//    fun register(@Body account:RegisterAccount):Call<HashMap<Any,Any>>
+       @POST("sendreq")
+       fun sendRequest(@Body sendRequestBody: SendRequestBody):Call<SendRequestResponse>
 
-//
-//    @POST("signin")  //customer signin
-//     fun storePost(@Body map:HashMap<Any, Any>):Call<LoginReturn>
-//
-//     @POST("signup")
-//     fun signUp()
+       @POST("cancelreq")
+       fun cancelRequest(@Body cancelRequestBody: CancelRequestBody):Call<CancelRequestResponse>
+
+       @POST("getapp")
+       fun getRequestApplication(@Body requestApplicationBody: RequestApplicationBody):Call<RequestApplicationResponse>
+
+       @POST("acceptapp")
+       fun acceptApp(@Body acceptAppBody: AcceptAppBody):Call<AcceptAppResponse>
+
+       @POST("rejectapp")
+       fun rejectApp(@Body rejectAppBody: RejectAppBody):Call<RejectAppResonse>
+
+       @POST("done")
+       fun requestDone(@Body doneBody: DoneBody):Call<DoneResponse>
 }

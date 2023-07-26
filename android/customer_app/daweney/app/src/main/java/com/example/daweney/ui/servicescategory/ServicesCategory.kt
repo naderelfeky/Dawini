@@ -96,6 +96,7 @@ class ServicesCategory : AppCompatActivity() {
                     val intent = Intent(this, Services::class.java)
                     intent.putExtra(IntentExtraKey.SERVICE_TYPE, services[position].EnglishName)
                     startActivity(intent)
+                    finish()
                 })
     }
 

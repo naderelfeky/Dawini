@@ -61,11 +61,12 @@
             android:layout_gravity="center"
             >
         <androidx.cardview.widget.CardView
+            android:id="@+id/requestDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:alpha=".9"
+            android:alpha=".95"
             android:backgroundTint="@color/navy_blue_600"
             app:cardCornerRadius="40dp">
 
@@ -97,6 +98,7 @@
 
                 <!--request provider-->
                 <RelativeLayout
+                    android:id="@+id/provider_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -123,7 +125,7 @@
                         android:text="@string/provider_name" />
 
                     <TextView
-                        android:id="@+id/requestProviderType"
+                        android:id="@+id/requestProviderGender"
                         style="@style/NormalTextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -132,21 +134,11 @@
                         android:text="@string/gender_men"
                         app:drawableStartCompat="@drawable/ic_man" />
                 </RelativeLayout>
-                <!--choose providers-->
-                    <Button
-                        android:id="@+id/choose_provider_button"
-                        style="@style/ButtonStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/done_button_status"
-                        android:drawableEnd="@drawable/ic_down_arrow"
-                        android:text="@string/choose_provider"
-                        android:visibility="gone"
-                        />
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/request_provider_apply"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:visibility="gone"
                     tools:listitem="@layout/request_provider_row"/>
                 <!--line-->
                 <TextView style="@style/line" />
@@ -237,12 +229,11 @@
                         app:drawableStartCompat="@drawable/ic_money" />
                 </LinearLayout>
 
-                <!--line-->
-                <TextView style="@style/line" />
 
 
                 <!--request chat-->
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -285,6 +276,7 @@
                         android:text="@string/cancel" />
 
                     <ImageButton
+                        android:id="@+id/requestCancelButton"
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
@@ -300,6 +292,7 @@
 
                 <!--done button-->
                 <Button
+                    android:id="@+id/done_btn"
                     style="@style/ButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -311,6 +304,18 @@
 
         </androidx.cardview.widget.CardView>
         </ScrollView>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/myRequestDetailsLottieAnimationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addRequest"
