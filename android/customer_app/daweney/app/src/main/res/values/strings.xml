@@ -49,6 +49,7 @@
     <string name="gender_men">men</string>
     <string name="cancel">cancel</string>
     <string name="done">Done</string>
+    <string name="ok" >ok</string>
     <string name="call_provider">call provider</string>
     <string name="choose_provider">choose provider </string>
     <string name="plus_one">+1</string>
@@ -85,4 +86,57 @@
     <string name="no_provider">No Provider Found: No provider available for your requested service. Please check back or choose a different option.</string>
     <string name="no_providers_found_yet">No providers found yet</string>
     <string name="search_here">search here</string>
+    <string name="open_drawer">open navigation drawer</string>
+    <string name="close_drawer">close  navigation drawer</string>
+    <string name="communication">communication</string>
+    <string name="english_language" translatable="false">en</string>
+    <string name="arabic_language" translatable="false">ar</string>
+    <string name="theme">theme</string>
+    <string name="language">language</string>
+    <string name="my_account">my account</string>
+    <string name="profile">profile</string>
+    <string name="history">history</string>
+    <string name="light">light</string>
+    <string name="dark">dark</string>
+    <string name="arabic_language_ex" translatable="false">اب</string>
+    <string name="english_language_ex" translatable="false">AB</string>
+    <string name="text" >this text for large string to test. this text for large string to test. this text for large string to test. this text for large string to test. this text for large string to test.</string>
+    <string name="profile_img">profile image</string>
+    <string name="edit_icon">"edit icon "</string>
+    <string name="edit">edit</string>
+    <string name="none" >none</string>
+    <string name="update">update</string>
+    <string name="task_cancelled">Task Cancelled</string>
+    <string name="request_failure">failure we try to connect again</string>
+    <string name="update_failure" >failure try again</string>
+    <string name="logout" >Logout</string>
+    <string name="whatsapp">whatsapp</string>
+    <string name="permission_required">permission required</string>
+    <string name="granted_permission">granted permission</string>
+    <string name="need_call_permission">To make calls, please grant call access.</string>
+    <string name="code_has_send">code has send</string>
+    <string name="login_with_google">you login with google , try login with it</string>
+    <string name="email_not_found">email not found you should register first</string>
+    <string name="error_try_again">"error , try again "</string>
+    <string name="opps_try_again">opps ,try again</string>
+    <string name="username_or_pass_wrong">user name or password are wrong</string>
+    <string name="have_error_try_again">have a error try again</string>
+    <string name="cant_login_try_again">"can't login try again "</string>
+    <string name="email_are_Wrong">email are wrong</string>
+    <string name="user_already_existy">user already exist</string>
+    <string name="pass_length_error">password length should more 8</string>
+    <string name="should_register_before">you should register before</string>
+    <string name="code_is_wrong">code is wrong !</string>
+    <string name="nursing_services">nursing services</string>
+    <string name="medical_services">medical services</string>
+    <string name="radiology_services">Radiology services</string>
+    <string name="medical_tests">medical tests</string>
+    <string name="medical_supply">Medical supply</string>
+    <string name="medical_components">Medical components</string>
+    <string name="error_with_server_try_again">error with server try again</string>
+    <string name="this_category_not_found">this category not found</string>
+    <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiZGF3ZW5leSIsImEiOiJjbGppMmI0cmQwYW9iM2ZueHZwODMzdmJiIn0.4WAlhAkqjbR7IrsNyvip3g</string>
+    <string name="enable_GPS">enable GPS</string>
+    <string name="gps_not_enable">GPS Not Enable</string>
+    <string name="location_required">Location permission need to send request</string>
 </resources>

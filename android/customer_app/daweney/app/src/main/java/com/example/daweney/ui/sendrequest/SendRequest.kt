@@ -1,39 +1,57 @@
 package com.example.daweney.ui.sendrequest
 
+import android.Manifest
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.location.Location
+import android.location.LocationManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.example.daweney.R
 import com.example.daweney.pojo.intent_extra_key.IntentExtraKey
 import com.example.daweney.pojo.send_request.SendRequestBody
 import com.example.daweney.pojo.services.ServicesResponse
 import com.example.daweney.pojo.services.ServicesResponseItem
-import com.example.daweney.repo.SharedPrefRepo
+import com.example.daweney.repo.SendRequestRepository
 import com.example.daweney.ui.dialog.CustomDialogFragment
 import com.example.daweney.ui.login.Login
 import com.example.daweney.ui.myrequests.MyRequests
-import com.example.daweney.ui.sharedPref.SharedPrefVM
-import com.example.daweney.ui.sharedPref.SharedPreferenceRepoFactory
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_send_request.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SendRequest : AppCompatActivity() {
-
+class SendRequest : LocalizationActivity(), AskPermissionInterface {
+    private val sendRequestResponse = SendRequestRepository(this)
+    private val MY_PERMISSIONS_REQUEST_LOCATION = 123
     private lateinit var dateEditText: EditText
     private lateinit var genderEditView: AutoCompleteTextView
     private lateinit var servicesAdapter: ServicesAdapter
@@ -48,19 +66,16 @@ class SendRequest : AppCompatActivity() {
     private lateinit var sendRequestAnimation: LottieAnimationView
     private var servicesList: ArrayList<ServicesResponseItem>? = null
     private lateinit var sendRequestViewModel: SendRequestViewModel
-    private lateinit var sharedPrefVM: SharedPrefVM
     private lateinit var date: String
     private lateinit var serviceType: String
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_send_request)
-
-        sendRequestViewModel = ViewModelProvider(this)[SendRequestViewModel::class.java]
-        //SharedPreference
-        val myArg = SharedPrefRepo(this)
-        val factory = SharedPreferenceRepoFactory(myArg)
-        sharedPrefVM = ViewModelProvider(this, factory)[SharedPrefVM::class.java]
-
+        viewModelInit()
         initialization()
         initGenderMenu()
         sendRequestSuccessObserver()
@@ -78,8 +93,16 @@ class SendRequest : AppCompatActivity() {
         locationEditText.setOnClickListener { onClick(it) }
         genderEditView.setOnClickListener { onClick(it) }
         sendButton.setOnClickListener { onClick(it) }
+        goBack.setOnClickListener { onClick(it) }
+        setLightStatusBar()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    }
 
 
+    private fun viewModelInit() {
+        val sendRequestViewModelFactory = SendRequestViewModelFactory(this)
+        sendRequestViewModel =
+            ViewModelProvider(this, sendRequestViewModelFactory)[SendRequestViewModel::class.java]
     }
 
     private fun progressBarObserver() {
@@ -154,7 +177,7 @@ class SendRequest : AppCompatActivity() {
     }
 
     private fun patientNameTextWatcher() {
-        patientNameTextView.addTextChangedListener(object : TextWatcher {
+        patientNameEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -162,13 +185,13 @@ class SendRequest : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
 
-                    patientNameTextView.error = getString(R.string.name_required_msg)
+                    patientNameEditText.error = getString(R.string.name_required_msg)
                 } else {
 
                     if (isValidName(s.toString())) {
-                        patientNameTextView.error = null
+                        patientNameEditText.error = null
                     } else {
-                        patientNameTextView.error = getString(R.string.name_not_valid)
+                        patientNameEditText.error = getString(R.string.name_not_valid)
                     }
 
                 }
@@ -301,18 +324,18 @@ class SendRequest : AppCompatActivity() {
             itemList.add(item.title.toString())
         }
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, itemList)
-        genderTextView.setAdapter(adapter)
-        genderTextView.setText(itemList[0], false)
+        genderEditText.setAdapter(adapter)
+        genderEditText.setText(itemList[0], false)
     }
 
     private fun initialization() {
         selectionServicesRecyclerView = findViewById(R.id.selectionServicesRecyclerView)
         dateEditText = findViewById(R.id.dateEditText)
-        genderEditView = findViewById(R.id.genderTextView)
-        patientNameEditText = findViewById(R.id.patientNameTextView)
-        phoneEditText = findViewById(R.id.phoneNumberTextView)
-        addressEditText = findViewById(R.id.requestAddressTextView)
-        locationEditText = findViewById(R.id.requestLocationTextView)
+        genderEditView = findViewById(R.id.genderEditText)
+        patientNameEditText = findViewById(R.id.patientNameEditText)
+        phoneEditText = findViewById(R.id.phoneNumberEditText)
+        addressEditText = findViewById(R.id.requestAddressEditText)
+        locationEditText = findViewById(R.id.requestLocationEditText)
         sendButton = findViewById(R.id.sendRequest)
         progressBar = findViewById(R.id.progressBar)
         sendRequestCardView = findViewById(R.id.sendRequestCardView)
@@ -324,24 +347,170 @@ class SendRequest : AppCompatActivity() {
             R.id.dateEditText -> {
                 showDatePickerDialog()
             }
-            R.id.genderTextView -> {
+
+            R.id.genderEditText -> {
                 genderEditView.showDropDown()
             }
+
             R.id.sendRequest -> {
                 if (allFieldValid()) sendRequestViewModel.sendRequest(getRequest())
 
             }
-            R.id.requestLocationTextView->{
 
+            R.id.goBack -> {
+                finish()
+            }
+
+            R.id.requestLocationEditText -> {
+                when {
+                    !isGPSEnabled() -> {
+                        snackBar(
+                            getText(R.string.gps_not_enable).toString(),
+                            ::requestGPSEnabling,
+                            getText(R.string.enable_GPS).toString()
+                        )
+
+                    }
+
+                    else -> {
+                        checkPermission()
+                    }
+                }
             }
         }
     }
 
 
+    private fun snackBar(msg: String, requestGPSEnabling: () -> Unit, btnText: String) {
+        val rootView: View = findViewById(android.R.id.content)
+        val snackbar = Snackbar.make(
+            rootView,
+            msg,
+            Snackbar.LENGTH_LONG
+        )
+        val snackbarView = snackbar.view
+        snackbarView.setBackgroundResource(R.drawable.custom_snackbar)
+        snackbar.setAction(btnText) {
+            if (it != null) requestGPSEnabling()
+
+        }
+        snackbar.show()
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        progressBar.visibility = ViewGroup.VISIBLE
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        val locationRequest =
+            LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                val location: Location? = locationResult.lastLocation
+                location?.let {
+                    latitude = it.latitude
+                    longitude = it.longitude
+                    locationEditText.setText("long:$longitude  lat:$latitude")
+                    progressBar.visibility = ViewGroup.INVISIBLE
+                    fusedLocationClient.removeLocationUpdates(this)
+                }
+            }
+        }
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+
+    private fun isGPSEnabled(): Boolean {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    private fun requestGPSEnabling() {
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        startActivity(intent)
+    }
+
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                MY_PERMISSIONS_REQUEST_LOCATION
+            )
+        } else {
+            getLocation()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_LOCATION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation()
+                } else {
+                    dialogPermission(getText(R.string.location_required).toString())
+                    //showToast("Location permission denied. Please grant the permission to use this feature.")
+                }
+            }
+        }
+    }
+
+
+    private fun dialogPermission(msg: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+        ) {
+            checkPermission()
+            return
+        }
+        val permissionDialog = PermissionDialogFragment(msg, this)
+        permissionDialog.show(supportFragmentManager, "permission dialog")
+
+    }
+
+
+    override fun askLocationPermissionInterface() {
+
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val packageName = packageName
+
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+
+        startActivity(intent)
+    }
+
+    private fun setLightStatusBar() {
+        val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentTheme == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark theme
+            window.decorView.systemUiVisibility = 0
+
+        } else {
+            // Light theme
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+    }
+
     private fun allFieldValid(): Boolean {
         if (allFieldNotEmpty()) {
 
-            if (patientNameTextView.error != null) {
+            if (patientNameEditText.error != null) {
                 showToast(getString(R.string.name_not_valid))
             } else if (phoneEditText.error != null) {
                 showToast(getString(R.string.phone_not_valid))
@@ -362,19 +531,17 @@ class SendRequest : AppCompatActivity() {
 
     private fun allFieldNotEmpty(): Boolean {
 
-        if (patientNameTextView.text.isNullOrEmpty()) {
-            patientNameTextView.error = getString(R.string.name_required_msg)
+        if (patientNameEditText.text.isNullOrEmpty()) {
+            patientNameEditText.error = getString(R.string.name_required_msg)
         } else if (phoneEditText.text.isNullOrEmpty()) {
             phoneEditText.error = getString(R.string.phone_required_msg)
         } else if (dateEditText.text.isNullOrEmpty()) {
             dateEditText.error = getString(R.string.date_required_msg)
         } else if (addressEditText.text.isNullOrEmpty()) {
             addressEditText.error = getString(R.string.address_required_msg)
-        }
-//        else if (locationTextView.text.isNullOrEmpty()) {
-//            locationTextView.error = getString(R.string.address_required_msg)
-//        }
-        else {
+        } else if (locationEditText.text.isNullOrEmpty()) {
+            locationEditText.error = getString(R.string.address_required_msg)
+        } else {
             return true
         }
         return false
@@ -387,7 +554,7 @@ class SendRequest : AppCompatActivity() {
     private fun getRequest(): SendRequestBody {
         return SendRequestBody(
             addressEditText.text.toString(), getCustomerId(),
-            getProviderGender(), 30.941733, 30.680024, patientNameTextView.text.toString(),
+            getProviderGender(), latitude, longitude, patientNameEditText.text.toString(),
             phoneEditText.text.toString(), getServicesList(), date, serviceType
         )
     }
@@ -397,9 +564,11 @@ class SendRequest : AppCompatActivity() {
             getString(R.string.female) -> {
                 "female"
             }
+
             getString(R.string.male) -> {
                 "male"
             }
+
             else -> {
                 "anyone"
             }
@@ -472,7 +641,7 @@ class SendRequest : AppCompatActivity() {
     }
 
     private fun getCustomerId(): String {
-        val customerId = sharedPrefVM.getData(SharedPrefRepo.CUSTOMER_ID, "").toString()
+        val customerId = sendRequestResponse.getCustomerId()
         if (customerId.isEmpty()) {
             logout()
         }
@@ -481,9 +650,9 @@ class SendRequest : AppCompatActivity() {
 
     private fun logout() {
         val intent = Intent(this, Login::class.java)
-        sharedPrefVM.deleteDate(getCustomerId())
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        sendRequestResponse.deleteCustomerId()
         startActivity(intent)
-        finish()
     }
 
     private fun getServicesList(): List<String> {

@@ -6,8 +6,10 @@ import com.example.daweney.pojo.forgotpass.MsgResponse
 import com.example.daweney.pojo.login.LoginResponse
 import com.example.daweney.pojo.login.LoginUser
 import com.example.daweney.pojo.my_request_details.*
-import com.example.daweney.pojo.myreqests.RequestBody
-import com.example.daweney.pojo.myreqests.RequestResponse
+import com.example.daweney.pojo.myrequests.RequestBody
+import com.example.daweney.pojo.myrequests.RequestResponse
+import com.example.daweney.pojo.profile.ProfileBody
+import com.example.daweney.pojo.profile.ProfileResponse
 import com.example.daweney.pojo.register.RegisterResponse
 import com.example.daweney.pojo.register.RegisterUser
 import com.example.daweney.pojo.resetpass.ResetPassword
@@ -16,6 +18,8 @@ import com.example.daweney.pojo.send_request.SendRequestResponse
 import com.example.daweney.pojo.services.ServicesBody
 import com.example.daweney.pojo.services.ServicesResponse
 import com.example.daweney.pojo.services_category.ServicesCategoryResponse
+import com.example.daweney.pojo.update_profile.UpdateProfileBody
+import com.example.daweney.pojo.update_profile.UpdateProfileResponse
 import com.example.daweney.pojo.verifyaccount.VerifyUser
 import retrofit2.Call
 import retrofit2.http.*
@@ -65,4 +69,10 @@ interface ApiInterface {
 
        @POST("done")
        fun requestDone(@Body doneBody: DoneBody):Call<DoneResponse>
+
+       @POST("get-profile")
+       fun getProfileData(@Body profileBody:ProfileBody):Call<ProfileResponse>
+
+       @POST("update-profile")
+       fun updateProfileData(@Body updateProfileBody: UpdateProfileBody):Call<UpdateProfileResponse>
 }

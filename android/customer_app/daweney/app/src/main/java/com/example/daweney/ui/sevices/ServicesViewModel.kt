@@ -13,11 +13,11 @@ import retrofit2.Response
 class ServicesViewModel : ViewModel() {
     private val servicesRepository = ServicesRepository()
     private val _services = MutableLiveData<ServicesResponse>()
-    private val _errorMessage = MutableLiveData<String>()
+    private val _errorMessage = MutableLiveData<Boolean>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _failWithConnection = MutableLiveData<Boolean>()
 
-    val errorMessage: LiveData<String>
+    val errorMessage: LiveData<Boolean>
         get() = _errorMessage
     val progressBar
         get() = _progressBar
@@ -38,7 +38,7 @@ class ServicesViewModel : ViewModel() {
                         _services.postValue(response.body())
                     }
                     else -> {
-                        _errorMessage.postValue("this category not found")
+                        _errorMessage.postValue(true)
                     }
                 }
                 _progressBar.postValue(false)

@@ -1,5 +1,6 @@
 package com.example.daweney.ui.myrequestdetails
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.example.daweney.pojo.my_request_details.RequestApplicationResponse
 import com.example.daweney.ui.myrequests.RequestRecyclerViewAdapter
 import kotlinx.android.synthetic.main.request_provider_row.view.*
 
-class RequestProviderAdapter(private val providerList: RequestApplicationResponse, private val requestProviderInterface: RequestProviderInterface):
+class RequestProviderAdapter(private val context:Context,private val providerList: RequestApplicationResponse, private val requestProviderInterface: RequestProviderInterface):
     RecyclerView.Adapter<RequestProviderAdapter.ProviderViewHolder>(){
     class ProviderViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
       val providerRate: TextView =itemView.findViewById(R.id.provider_rate)
@@ -33,7 +34,7 @@ class RequestProviderAdapter(private val providerList: RequestApplicationRespons
         val provider=providerList[position]
         holder.providerName.text=provider.providerName.toString()
         holder.providerRate.text=getRate(provider.providerRate)
-        holder.providerGender.text="male"
+        holder.providerGender.text=context.getText(R.string.male)
         holder.requestCost.text=provider.priceOfService.toString()
         holder.acceptProvider.setOnClickListener {
             requestProviderInterface.onAcceptApplication(provider)

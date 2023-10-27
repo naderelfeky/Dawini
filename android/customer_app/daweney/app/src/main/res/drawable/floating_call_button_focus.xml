@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle" >
-            <size android:height="65dp" android:width="65dp" />
+            <size android:height="@dimen/floating_button_height" android:width="@dimen/floating_button_width" />
             <gradient
                 android:angle="45"
                 android:endColor="@color/light_blue_200"
@@ -21,8 +21,8 @@
             android:layout_height="match_parent"
             android:shape="rectangle">
             <size
-                android:width="65dp"
-                android:height="65dp" />
+                android:width="@dimen/floating_button_width"
+                android:height="@dimen/floating_button_height" />
             <gradient
                 android:angle="45"
                 android:endColor="@color/light_blue_400"
@@ -39,7 +39,7 @@
                 android:right="2dp"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_phone" android:width="30dp" android:height="30dp" android:gravity="center">
+    <item android:drawable="@drawable/ic_phone" android:width="@dimen/floating_image_size" android:height="@dimen/floating_image_size" android:gravity="center">
 
     </item>
 </layer-list>

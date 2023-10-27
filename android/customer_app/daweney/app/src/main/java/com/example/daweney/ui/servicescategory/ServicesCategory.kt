@@ -1,26 +1,27 @@
 package com.example.daweney.ui.servicescategory
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.example.daweney.R
 import com.example.daweney.pojo.intent_extra_key.IntentExtraKey
 import com.example.daweney.pojo.services_category.ServicesCategoryResponse
 import com.example.daweney.ui.dialog.CustomDialogFragment
 import com.example.daweney.ui.sevices.Services
-import kotlinx.android.synthetic.main.services_category.*
+import kotlinx.android.synthetic.main.activity_services_category.*
 
-class ServicesCategory : AppCompatActivity() {
+class ServicesCategory : LocalizationActivity() {
     private lateinit var servicesViewModel: ServicesCategoryViewModel
-    private lateinit var services: ServicesCategoryResponse
+    private var services=ServicesCategoryResponse()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.services_category)
+        setContentView(R.layout.activity_services_category)
 
         servicesViewModel = ViewModelProvider(this)[ServicesCategoryViewModel::class.java]
 
@@ -32,10 +33,9 @@ class ServicesCategory : AppCompatActivity() {
         getServicesCategory()
         onItemOFCategoryClick()
         refreshMyCategory.setOnRefreshListener { getServicesCategory() }
-        backward.setOnClickListener { onClick(it) }
-        setting.setOnClickListener { onClick(it) }
+        goBack.setOnClickListener { onClick(it) }
         try_again_btn.setOnClickListener { onClick(it) }
-
+        setLightStatusBar()
     }
 
     private fun progressBarObserver() {
@@ -50,8 +50,8 @@ class ServicesCategory : AppCompatActivity() {
 
     private fun dialogObserver() {
         servicesViewModel.errorMessage.observe(this) {
-            if (it != "") {
-                val dialogFragment = CustomDialogFragment(it, applicationContext)
+            if (it) {
+                val dialogFragment = CustomDialogFragment(R.string.error_with_server_try_again.toString(), applicationContext)
                 dialogFragment.show(supportFragmentManager, "services_category_error_dialog")
             }
         }
@@ -60,9 +60,34 @@ class ServicesCategory : AppCompatActivity() {
 
     private fun servicesCategoryObserver() {
         servicesViewModel.servicesCategory.observe(this) {
-            services = it
-            services_gridView.adapter = ServicesAdapter(this, services)
+            it?.let {
+                services=it
+                services_gridView.adapter = ServicesAdapter(this, sortServicesCategory(it))
+            }
+
         }
+    }
+
+    private fun sortServicesCategory(it:ServicesCategoryResponse):ServicesCategoryResponse{
+
+        val sortList=services.sortedBy {
+            when (it.EnglishName) {
+                "Nursing services" -> 0
+                "medical services" -> 1
+                "Radiology services" -> 2
+                "Medical tests" -> 3
+                "Medical components" -> 4
+                "Medical supply" -> 5
+                else -> 6
+            }
+        }
+
+        val servicesCategoryResponse=ServicesCategoryResponse()
+            servicesCategoryResponse.addAll(sortList)
+
+        services=servicesCategoryResponse
+
+        return services
     }
 
 
@@ -103,16 +128,29 @@ class ServicesCategory : AppCompatActivity() {
 
     private fun onClick(view: View?) {
         when (view?.id) {
-            backward.id -> {
+            goBack.id -> {
                 finish()
             }
-            setting?.id -> {
-                Toast.makeText(this, "soon", Toast.LENGTH_SHORT).show()
-            }
+
             try_again_btn.id -> {
                 getServicesCategory()
             }
 
+        }
+    }
+
+    private fun setLightStatusBar() {
+        val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentTheme == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark theme
+            window.decorView.systemUiVisibility = 0
+
+        } else {
+            // Light theme
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
 

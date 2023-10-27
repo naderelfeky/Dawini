@@ -1,17 +1,18 @@
 package com.example.daweney.ui.myrequests
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.daweney.pojo.myreqests.RequestBody
-import com.example.daweney.pojo.myreqests.RequestResponse
+import com.example.daweney.pojo.myrequests.RequestBody
+import com.example.daweney.pojo.myrequests.RequestResponse
 import com.example.daweney.repo.RequestRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyRequestsViewModel : ViewModel() {
-    private val requestRepository = RequestRepository()
+class MyRequestsViewModel(val context: Context): ViewModel() {
+    private val requestRepository = RequestRepository(context)
     private val _progressBar = MutableLiveData<Boolean>()
     private val _emptyRequest = MutableLiveData<Boolean>()
     private val _failure = MutableLiveData<Boolean>()

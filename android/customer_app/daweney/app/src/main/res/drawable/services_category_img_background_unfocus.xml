@@ -14,8 +14,8 @@
           android:endX="67.37"
           android:endY="123.69"
           android:type="linear">
-        <item android:offset="0" android:color="#FF353F54"/>
-        <item android:offset="1" android:color="#FF222834" />
+        <item android:offset="0" android:color="@color/first_services_category_img_background_linear_color"/>
+        <item android:offset="1" android:color="@color/second_services_category_img_background_linear_color" />
       </gradient>
     </aapt:attr>
   </path>

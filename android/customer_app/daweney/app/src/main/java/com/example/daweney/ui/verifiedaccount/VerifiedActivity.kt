@@ -1,6 +1,7 @@
 package com.example.daweney.ui.verifiedaccount
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.example.daweney.R
 import com.example.daweney.pojo.verifyaccount.VerifyUser
 import com.example.daweney.ui.forgotpass.ForgotPassword
@@ -17,7 +19,7 @@ import com.example.daweney.ui.resetpass.ResetPassword
 import com.example.daweney.ui.dialog.CustomDialogFragment
 import kotlinx.android.synthetic.main.activity_verified.*
 
-class VerifiedActivity : AppCompatActivity(), TextWatcher {
+class VerifiedActivity : LocalizationActivity(), TextWatcher {
     private lateinit var verifyUser: VerifyUserViewModel
     private lateinit var sendCode: SendCodeViewModel
     private lateinit var callingActivity: String
@@ -30,11 +32,7 @@ class VerifiedActivity : AppCompatActivity(), TextWatcher {
 
         //watcher
         pinview.addTextChangedListener(this)
-
-        verifyUser = ViewModelProvider(this)[VerifyUserViewModel::class.java]
-        sendCode = ViewModelProvider(this)[SendCodeViewModel::class.java]
-
-
+        viewModelInit()
         getDataFormIntent()
         setEmailTextView()
         verifyUserProgressBar()
@@ -45,7 +43,15 @@ class VerifiedActivity : AppCompatActivity(), TextWatcher {
         sendCodeProgressBar()
         btn_verified_code.setOnClickListener { click(it) }
         resend.setOnClickListener { click(it) }
+        setLightStatusBar()
 
+    }
+
+    private fun viewModelInit() {
+        val verifyUserViewModelFactory=VerifyUserViewModelFactory(this)
+        verifyUser = ViewModelProvider(this,verifyUserViewModelFactory)[VerifyUserViewModel::class.java]
+        val sendCodeViewModelFactory=SendCodeViewModelFactory(this)
+        sendCode = ViewModelProvider(this,sendCodeViewModelFactory)[SendCodeViewModel::class.java]
     }
 
     private fun setEmailTextView() {
@@ -73,11 +79,11 @@ class VerifiedActivity : AppCompatActivity(), TextWatcher {
             }
 
         }
-      //  Log.d("verified", email + pass)
+
     }
 
     private fun click(view: View?) {
-         // progressBar.visibility = View.VISIBLE
+
         when (view?.id) {
             btn_verified_code.id -> {
                 verifyUser.verifyUser(VerifyUser(pinview.text.toString(), email))
@@ -85,6 +91,21 @@ class VerifiedActivity : AppCompatActivity(), TextWatcher {
             resend.id -> {
                 sendCode.sendCode(email)
             }
+        }
+    }
+
+    private fun setLightStatusBar() {
+        val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentTheme == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark theme
+            window.decorView.systemUiVisibility = 0
+
+        } else {
+            // Light theme
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
 
@@ -150,13 +171,13 @@ class VerifiedActivity : AppCompatActivity(), TextWatcher {
             val intent = Intent(this, VerifiedActivity::class.java)
             startActivity(intent)
             finish()
-            Toast.makeText(this, "you should register before", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getText(R.string.should_register_before), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun codeSendSuccessful() {
         sendCode.verifyUserMutableLiveData.observe(this) {
-            Toast.makeText(this, "code has send", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getText(R.string.code_has_send), Toast.LENGTH_SHORT).show()
         }
     }
 

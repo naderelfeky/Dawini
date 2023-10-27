@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/navy_blue"
+    android:background="@color/background"
+    android:layoutDirection="ltr"
     tools:context=".ui.sendrequest.SendRequest">
 
 
@@ -17,61 +18,44 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="@dimen/toolbar_layout_height"
             android:background="@color/transparent">
 
             <!-- Start drawable -->
             <FrameLayout
                 android:id="@+id/goBack"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/toolBar_width"
+                android:layout_height="@dimen/toolBar_height"
                 android:layout_gravity="start"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/toolBar_button_margin"
                 android:background="@drawable/control_button">
 
                 <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
+                    android:layout_width="@dimen/toolBar_image_width"
+                    android:layout_height="@dimen/toolBar_image_height"
                     android:layout_gravity="center"
                     android:contentDescription="@string/back_arrow"
                     android:src="@drawable/ic_left" />
             </FrameLayout>
-            <!-- End drawable -->
-            <FrameLayout
-                android:id="@+id/setting"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/control_button">
-
-                <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/setting"
-                    android:src="@drawable/ic_setting" />
-
-            </FrameLayout>
-
 
         </androidx.appcompat.widget.Toolbar>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="?attr/actionBarSize">
+            android:layout_marginTop="@dimen/toolbar_layout_height"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/sendRequestCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
                 android:alpha=".95"
-                android:backgroundTint="@color/navy_blue_600"
-                app:cardCornerRadius="40dp">
+                android:backgroundTint="@color/request_background"
+                android:layoutDirection="ltr"
+                app:cardCornerRadius="40dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,7 +69,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="20dp"
-                        android:text="@string/service_type" />
+                        android:text="@string/service_type"
+                        android:textColor="@color/first_light_text_color" />
 
 
                     <!--line -->
@@ -102,6 +87,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/request_services"
+                            android:textColor="@color/first_light_text_color"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -112,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/service_name"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHeight_max="200dp"
+                            app:layout_constraintHeight_max="@dimen/send_request_services_list_height"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/requestServices"
                             tools:listitem="@layout/send_request_service_item" />
@@ -131,14 +117,14 @@
                         app:startIconDrawable="@drawable/ic_person">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/patientNameTextView"
+                            android:id="@+id/patientNameEditText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:drawablePadding="10dp"
                             android:hint="@string/patient_name"
                             android:inputType="textPersonName"
-                            android:textColor="#E0F2F1"
-                            android:textColorHighlight="@color/navy_blue_200"
+                            android:textColor="@color/first_light_text_color"
+                            android:textColorHighlight="@color/text_color_high_light"
                             android:textColorLink="@color/navy_blue_200">
 
                         </com.google.android.material.textfield.TextInputEditText>
@@ -154,15 +140,15 @@
                         app:startIconDrawable="@drawable/ic_phone">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/phoneNumberTextView"
+                            android:id="@+id/phoneNumberEditText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:drawablePadding="10dp"
                             android:hint="@string/phone"
                             android:inputType="phone"
                             android:maxLength="11"
-                            android:textColor="#E0F2F1"
-                            android:textColorHighlight="@color/navy_blue_200"
+                            android:textColor="@color/first_light_text_color"
+                            android:textColorHighlight="@color/text_color_high_light"
                             android:textColorLink="@color/navy_blue_200">
 
                         </com.google.android.material.textfield.TextInputEditText>
@@ -188,7 +174,7 @@
                             app:endIconMode="custom">
 
                             <AutoCompleteTextView
-                                android:id="@+id/genderTextView"
+                                android:id="@+id/genderEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:clickable="true"
@@ -197,7 +183,7 @@
                                 android:hint="@string/provider_gender"
                                 android:inputType="none"
                                 android:padding="15dp"
-                                android:textColor="#E0F2F1" />
+                                android:textColor="@color/first_light_text_color" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -222,8 +208,8 @@
                                 android:hint="@string/date"
                                 android:inputType="none"
                                 android:singleLine="true"
-                                android:textColor="#E0F2F1"
-                                android:textColorHighlight="@color/navy_blue_200"
+                                android:textColor="@color/first_light_text_color"
+                                android:textColorHighlight="@color/text_color_high_light"
                                 android:textColorLink="@color/navy_blue_200">
 
                             </com.google.android.material.textfield.TextInputEditText>
@@ -241,15 +227,15 @@
                         app:startIconDrawable="@drawable/ic_home">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/requestAddressTextView"
+                            android:id="@+id/requestAddressEditText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:drawablePadding="10dp"
                             android:hint="@string/address"
                             android:inputType="textPersonName"
                             android:maxLines="1"
-                            android:textColor="#E0F2F1"
-                            android:textColorHighlight="@color/navy_blue_200"
+                            android:textColor="@color/first_light_text_color"
+                            android:textColorHighlight="@color/text_color_high_light"
                             android:textColorLink="@color/navy_blue_200">
 
                         </com.google.android.material.textfield.TextInputEditText>
@@ -257,7 +243,6 @@
 
                     <!--   request location  -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:visibility="gone"
                         style="@style/SendRequestEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -265,17 +250,17 @@
                         app:startIconDrawable="@drawable/ic_location">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/requestLocationTextView"
+                            android:id="@+id/requestLocationEditText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:drawablePadding="10dp"
-                            android:hint="@string/request_location"
                             android:clickable="true"
-                            android:focusable="false"
+                            android:drawablePadding="10dp"
                             android:ellipsize="end"
+                            android:focusable="false"
+                            android:hint="@string/request_location"
                             android:inputType="none"
-                            android:textColor="#E0F2F1"
-                            android:textColorHighlight="@color/navy_blue_200"
+                            android:textColor="@color/first_light_text_color"
+                            android:textColorHighlight="@color/text_color_high_light"
                             android:textColorLink="@color/navy_blue_200">
 
                         </com.google.android.material.textfield.TextInputEditText>
@@ -296,7 +281,7 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -310,10 +295,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/sendRequestAnimation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="12dp"
         android:visibility="gone" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:tools="http://schemas.android.com/tools"
     android:width="165dp"
     android:height="236dp"
     android:viewportWidth="165"
@@ -14,8 +15,10 @@
           android:endX="95.72"
           android:endY="202.72"
           android:type="linear">
-        <item android:offset="0" android:color="#FF353F54"/>
-        <item android:offset="1" android:color="#FF222834"/>
+        <item android:offset="0" android:color="@color/first_services_category_background_linear_color"
+            tools:ignore="VectorRaster" />
+        <item android:offset="1" android:color="@color/second_services_category_background_linear_color"
+            tools:ignore="VectorRaster" />
       </gradient>
     </aapt:attr>
   </path>

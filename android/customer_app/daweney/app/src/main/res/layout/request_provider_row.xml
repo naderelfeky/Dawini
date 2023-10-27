@@ -3,20 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/navy_blue"
     app:cardCornerRadius="15dp"
+    android:layoutDirection="ltr"
     android:layout_margin="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/linear_navy_blue"
         android:padding="15dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/provider_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/doctor"
+            android:layout_width="@dimen/request_profile_image_radius"
+            android:layout_height="@dimen/request_profile_image_radius"
+            android:src="@drawable/user_profile_img"
             android:background="@drawable/custom_circle_shape"
             app:civ_border_color="@color/light_blue_100"
             app:civ_border_width="1dp" />
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/provider_img"
+            android:textColor="@color/myrequest_first_text_color"
             android:gravity="center"
             android:text="@string/provider_name" />
 
@@ -38,6 +40,7 @@
             android:layout_below="@+id/provider_name"
             android:layout_toEndOf="@+id/provider_img"
             android:text="@string/gender_men"
+            android:textColor="@color/myrequest_second_text_color"
             app:drawableStartCompat="@drawable/ic_man" />
 
         <!--request cost-->
@@ -54,6 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="@color/myrequest_second_text_color"
                 android:text="@string/rate" />
 
             <TextView
@@ -63,8 +67,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:minHeight="48dp"
+                android:minHeight="@dimen/request_item_min_height"
                 android:text="@string/rate_ex"
+                android:textColor="@color/myrequest_first_text_color"
                 app:drawableStartCompat="@drawable/ic_rate" />
         </LinearLayout>
 
@@ -82,6 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="@color/myrequest_second_text_color"
                 android:text="@string/cost" />
 
             <TextView
@@ -91,9 +97,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:minHeight="48dp"
+                android:minHeight="@dimen/request_item_min_height"
+                android:textColor="@color/myrequest_first_text_color"
                 android:text="@string/cost_ex"
-                app:drawableStartCompat="@drawable/ic_money" />
+                app:drawableStartCompat="@drawable/ic_money"/>
         </LinearLayout>
 
         <LinearLayout
@@ -107,7 +114,7 @@
             <ImageButton
                 android:id="@+id/accept_provider"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/request_item_min_height"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/done_button_status"
@@ -118,7 +125,7 @@
             <ImageButton
                 android:id="@+id/reject_provider"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/request_item_min_height"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/done_button_status"

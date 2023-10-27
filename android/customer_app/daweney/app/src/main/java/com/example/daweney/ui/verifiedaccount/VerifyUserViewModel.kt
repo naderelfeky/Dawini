@@ -1,8 +1,10 @@
 package com.example.daweney.ui.verifiedaccount
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.daweney.R
 import com.example.daweney.pojo.verifyaccount.MsgResponse
 import com.example.daweney.pojo.verifyaccount.VerifyUser
 import com.example.daweney.repo.UserRepository
@@ -10,8 +12,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class VerifyUserViewModel : ViewModel() {
-    private val userRepository = UserRepository()
+class VerifyUserViewModel(val context: Context) : ViewModel() {
+    private val userRepository = UserRepository(context)
     private val _verifyUserMutableLiveData = MutableLiveData<MsgResponse>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _dialogMessage = MutableLiveData("")
@@ -31,17 +33,17 @@ class VerifyUserViewModel : ViewModel() {
                         _verifyUserMutableLiveData.postValue(response.body())
                     }
                     400 -> {
-                        _dialogMessage.postValue("code is wrong !")
+                        _dialogMessage.postValue(context.getText(R.string.code_is_wrong).toString())
                     }
                     else -> {
-                        _dialogMessage.postValue("error try again")
+                        _dialogMessage.postValue(context.getText(R.string.error_try_again).toString())
                     }
                 }
                 _progressBar.postValue(false)
             }
 
             override fun onFailure(call: Call<MsgResponse>, t: Throwable) {
-                _dialogMessage.postValue("failure try again")
+                _dialogMessage.postValue(context.getText(R.string.error_try_again).toString())
                 _progressBar.postValue(false)
             }
         })
