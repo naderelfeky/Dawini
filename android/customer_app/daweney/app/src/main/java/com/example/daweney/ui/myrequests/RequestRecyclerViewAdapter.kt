@@ -1,20 +1,22 @@
 package com.example.daweney.ui.myrequests
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daweney.R
-import com.example.daweney.pojo.myreqests.RequestResponse
-import com.example.daweney.pojo.myreqests.RequestResponseItem
-import com.example.daweney.pojo.myreqests.Service
+import com.example.daweney.pojo.myrequests.RequestResponse
+import com.example.daweney.pojo.myrequests.RequestResponseItem
+import com.example.daweney.pojo.myrequests.Service
+import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RequestRecyclerViewAdapter (private val requests: RequestResponse,private val myRequestInterface: MyRequestInterface):
+class RequestRecyclerViewAdapter (val context:Context,private val requests: RequestResponse,private val myRequestInterface: MyRequestInterface):
     RecyclerView.Adapter<RequestRecyclerViewAdapter.RequestViewHolder>() ,Filterable{
     private val fullRequestsList=ArrayList<RequestResponseItem>()
     init {
@@ -24,7 +26,7 @@ class RequestRecyclerViewAdapter (private val requests: RequestResponse,private 
     class RequestViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val requestBackground: FrameLayout =itemView.findViewById(R.id.requestBackground)
         val serviceType: TextView =itemView.findViewById(R.id.serviceType)
-        val serviceTypeImg: ImageView =itemView.findViewById(R.id.serviceTypeImg)
+        val serviceTypeImg: CircleImageView =itemView.findViewById(R.id.serviceTypeImg)
         val requestTime: TextView =itemView.findViewById(R.id.requestTime)
         val requestDate: TextView =itemView.findViewById(R.id.requestDate)
         val requestServices: TextView =itemView.findViewById(R.id.requestServices)
@@ -38,7 +40,7 @@ class RequestRecyclerViewAdapter (private val requests: RequestResponse,private 
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val request=requests[position]
         holder.requestBackground.setBackgroundResource(requestsStatusBackground(request.status))
-        holder.serviceType.text = request.typeofservice
+        holder.serviceType.text = getServicesType(request.typeofservice)
         holder.requestDate.text=getDate(request.date)
         holder.requestTime.text=getTime(request.date)
         holder.requestServices.text=getServices(request.service)
@@ -53,6 +55,18 @@ class RequestRecyclerViewAdapter (private val requests: RequestResponse,private 
        }
     }
 
+    private fun getServicesType(typeOfService: String): String {
+        return when(typeOfService){
+            "Nursing services"-> context.getText(R.string.nursing_services).toString()
+            "medical services"-> context.getText(R.string.medical_services).toString()
+            "Radiology services"-> context.getText(R.string.radiology_services).toString()
+            "Medical tests"-> context.getText(R.string.medical_tests).toString()
+            "Medical supply"-> context.getText(R.string.medical_supply).toString()
+            "Medical components"-> context.getText(R.string.medical_components).toString()
+            else-> context.getText(R.string.service_type).toString()
+        }
+    }
+
     private fun requestsStatusBackground(status: String): Int {
         return when(status){
             "pending" ->{R.drawable.linear_red_orange_color}
@@ -65,9 +79,12 @@ class RequestRecyclerViewAdapter (private val requests: RequestResponse,private 
 
     private fun getServiceImg(typeOfService: String): Int {
         return when(typeOfService){
-            "nursing"-> {R.drawable.doctor}
-            "radio"-> {R.drawable.doctor}
-            "doctor"-> {R.drawable.doctor}
+            "Nursing services"-> {R.drawable.nurse_services}
+            "medical services"-> {R.drawable.doctor_services}
+            "Radiology services"-> {R.drawable.radiology_services}
+            "Medical tests"-> {R.drawable.medical_tests_services}
+            "Medical supply"-> {R.drawable.support_services}
+            "Medical components"-> {R.drawable.medical_component_services}
             else-> {R.drawable.doctor}
         }
     }

@@ -1,51 +1,47 @@
 package com.example.daweney.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.example.daweney.R
-import com.example.daweney.R.*
+import com.example.daweney.R.layout
 import com.example.daweney.pojo.login.LoginUser
-import com.example.daweney.repo.SharedPrefRepo
+import com.example.daweney.repo.UserRepository
 import com.example.daweney.ui.dialog.CustomDialogFragment
 import com.example.daweney.ui.forgotpass.ForgotPassword
 import com.example.daweney.ui.myrequests.MyRequests
 import com.example.daweney.ui.register.Register
-import com.example.daweney.ui.sharedPref.SharedPrefVM
-import com.example.daweney.ui.sharedPref.SharedPreferenceRepoFactory
-import com.example.daweney.ui.verifiedaccount.SendCodeViewModel
 import com.example.daweney.ui.verifiedaccount.VerifiedActivity
-import kotlinx.android.synthetic.main.login.*
+import com.google.android.material.elevation.SurfaceColors
+import kotlinx.android.synthetic.main.activity_login.emailTextView
+import kotlinx.android.synthetic.main.activity_login.forget_pass
+import kotlinx.android.synthetic.main.activity_login.loginButton
+import kotlinx.android.synthetic.main.activity_login.passwordTextView
+import kotlinx.android.synthetic.main.activity_login.progressBar
+import kotlinx.android.synthetic.main.activity_login.signup
 
-class Login : AppCompatActivity(), TextWatcher {
+class Login : LocalizationActivity(), TextWatcher {
 
-    private lateinit var sharedPrefVM: SharedPrefVM
     private lateinit var login: LoginViewModel
     private lateinit var sendCode: SendCodeViewModel
     private lateinit var email: String
     private lateinit var password: String
+    private val userRepository=UserRepository(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.login)
+        setContentView(layout.activity_login)
 
 
         //watcher
         emailTextView.addTextChangedListener(this)
         passwordTextView.addTextChangedListener(this)
 
-        val myArg = SharedPrefRepo(this)
-        val factory = SharedPreferenceRepoFactory(myArg)
-
-        login = ViewModelProvider(this)[LoginViewModel::class.java]
-        sharedPrefVM = ViewModelProvider(this, factory)[SharedPrefVM::class.java]
-        sendCode=ViewModelProvider(this)[SendCodeViewModel::class.java]
-
-
+        viewModelInit()
         loginButton.setOnClickListener { click(it) }
         signup.setOnClickListener { click(it) }
         forget_pass.setOnClickListener { click(it) }
@@ -54,14 +50,21 @@ class Login : AppCompatActivity(), TextWatcher {
         progressBarObserve()
         dialogMessageObserve()
         emailVerifiedObserve()
+        setLightStatusBar()
     }
 
+    private fun viewModelInit() {
+        val loginViewModelFactory=LoginViewModelFactory(this)
+        login = ViewModelProvider(this,loginViewModelFactory)[LoginViewModel::class.java]
+        val sendCodeViewModelFactory=SendCodeViewModelFactory(this)
+        sendCode=ViewModelProvider(this,sendCodeViewModelFactory)[SendCodeViewModel::class.java]
+    }
 
 
     private fun getIntentExtrasData() {
         val mail: String = intent.getStringExtra("email").toString()
         val pass: String = intent.getStringExtra("pass").toString()
-        Log.d("extras", pass + mail)
+
         if (mail != "null") emailTextView.setText(mail)
         if (pass != "null") passwordTextView.setText(pass)
     }
@@ -136,6 +139,21 @@ class Login : AppCompatActivity(), TextWatcher {
         }
     }
 
+    private fun setLightStatusBar() {
+        val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentTheme == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark theme
+            window.decorView.systemUiVisibility = 0
+
+        } else {
+            // Light theme
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+    }
+
     private fun dialogMessageObserve() {
         login.dialogMessage.observe(this) {
 
@@ -164,9 +182,8 @@ class Login : AppCompatActivity(), TextWatcher {
 
     private fun loginSuccessful() {
         login.loginMutableLiveData.observe(this) {
-           sharedPrefVM.saveData(SharedPrefRepo.CUSTOMER_ID, it.customerID)
+          userRepository.setCustomerId(it.customerID)
             startMainActivity()
-            //  Log.d("else", sharedPrefVM.getData(SharedPrefRepo.EMAIL,"null").toString())
         }
 
     }

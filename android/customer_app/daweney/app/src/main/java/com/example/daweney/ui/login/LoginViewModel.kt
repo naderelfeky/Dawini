@@ -1,9 +1,10 @@
 package com.example.daweney.ui.login
 
-import android.util.Log
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.daweney.R
 import com.example.daweney.pojo.login.LoginResponse
 import com.example.daweney.pojo.login.LoginUser
 import com.example.daweney.repo.UserRepository
@@ -11,12 +12,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val context: Context) : ViewModel() {
     private val _loginMutableLiveData = MutableLiveData<LoginResponse>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _dialogMessage = MutableLiveData("")
     private val _emailIsVerified = MutableLiveData<Boolean>()
-    private val userRepository = UserRepository()
+    private val userRepository = UserRepository(context)
 
     // livedata which use to observe change
     val loginMutableLiveData: LiveData<LoginResponse>
@@ -38,21 +39,21 @@ class LoginViewModel : ViewModel() {
                         _loginMutableLiveData.postValue(response.body())
                     }
                     400 -> {
-                        _dialogMessage.postValue("user name or password are wrong")
+                        _dialogMessage.postValue(context.getText(R.string.username_or_pass_wrong).toString())
                     }
                     401 -> {
                         _emailIsVerified.postValue(false)
                     }
                     else -> {
-                        _dialogMessage.postValue("have a error try again ")
+                        _dialogMessage.postValue(context.getText(R.string.have_error_try_again).toString())
                     }
                 }
                 _progressBar.postValue(false)
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Log.d("response", "onResponse: failure")
-                _dialogMessage.postValue("can't login try again ")
+
+                _dialogMessage.postValue(context.getText(R.string.cant_login_try_again).toString())
                 _progressBar.postValue(false)
             }
 

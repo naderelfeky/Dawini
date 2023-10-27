@@ -46,12 +46,22 @@ class ServicesAdapter(private val services: ServicesResponse,private val service
         val service=services[position]
         val isSelected = selectedServices.contains(services[position])
         holder.bind(isSelected)
-        holder.textView.text=service.EnglishName
+        holder.textView.text=getServicesName(service)
 //        holder.imageView.setImageResource(R.drawable.doctor)
 
         holder.itemView.setOnClickListener {
             toggleSelection(position)
             updateButtonState()
+        }
+
+    }
+
+    private fun getServicesName(service: ServicesResponseItem): String {
+        val currentLocale: Locale = Locale.getDefault()
+        return when(currentLocale.language){
+            "ar"->{service.ArabicName}
+            "en"->{service.EnglishName}
+            else->{service.EnglishName}
         }
 
     }

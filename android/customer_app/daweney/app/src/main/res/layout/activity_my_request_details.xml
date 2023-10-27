@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/navy_blue"
-    tools:context=".ui.myrequests.MyRequests">
+    android:background="@color/background"
+    android:layoutDirection="ltr"
+    tools:context=".ui.myrequestdetails.MyRequestDetails">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -15,49 +16,31 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="@dimen/toolbar_layout_height"
             android:background="@color/transparent">
 
             <!-- Start drawable -->
             <FrameLayout
                 android:id="@+id/goBack"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/toolBar_width"
+                android:layout_height="@dimen/toolBar_height"
                 android:layout_gravity="start"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/toolBar_button_margin"
                 android:background="@drawable/control_button">
 
                 <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
+                    android:layout_width="@dimen/toolBar_image_width"
+                    android:layout_height="@dimen/toolBar_image_height"
                     android:layout_gravity="center"
                     android:contentDescription="@string/back_arrow"
                     android:src="@drawable/ic_left" />
             </FrameLayout>
-            <!-- End drawable -->
-            <FrameLayout
-                android:id="@+id/setting"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/control_button">
-
-                <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/setting"
-                    android:src="@drawable/ic_setting" />
-
-            </FrameLayout>
-
 
         </androidx.appcompat.widget.Toolbar>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/toolbar_layout_height"
             android:layout_gravity="center"
             >
         <androidx.cardview.widget.CardView
@@ -65,11 +48,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
+            app:cardUseCompatPadding="true"
             android:alpha=".95"
-            android:backgroundTint="@color/navy_blue_600"
+            android:backgroundTint="@color/request_background"
             app:cardCornerRadius="40dp">
 
+            <!--            android:backgroundTint="@color/navy_blue_600"-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,32 +72,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:textColor="@color/myrequest_first_text_color"
                         android:text="@string/service_type" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:background="@color/light_blue_400" />
+                    android:background="@color/line_color" />
 
                 <!--request provider-->
                 <RelativeLayout
                     android:id="@+id/provider_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="@dimen/request_profile_info_margin_start"
+                    android:layout_marginTop="@dimen/request_profile_info_margin"
+                    android:layout_marginBottom="@dimen/request_profile_info_margin"
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/RequestProviderImg"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="@dimen/request_profile_image_radius"
+                        android:layout_height="@dimen/request_profile_image_radius"
                         android:background="@drawable/custom_circle_shape"
                         app:civ_border_color="@color/light_blue_100"
                         app:civ_border_width="1dp"
-                        android:src="@drawable/doctor" />
+                        android:src="@drawable/user_profile_img" />
 
                     <TextView
                         android:id="@+id/requestProviderName"
@@ -122,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/RequestProviderImg"
                         android:gravity="center"
+                        android:textColor="@color/myrequest_first_text_color"
                         android:text="@string/provider_name" />
 
                     <TextView
@@ -132,13 +118,14 @@
                         android:layout_marginTop="25dp"
                         android:layout_toEndOf="@+id/RequestProviderImg"
                         android:text="@string/gender_men"
+                        android:textColor="@color/myrequest_second_text_color"
                         app:drawableStartCompat="@drawable/ic_man" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/request_provider_apply"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="@dimen/request_providers_list_height"
                     tools:listitem="@layout/request_provider_row"/>
                 <!--line-->
                 <TextView style="@style/line" />
@@ -156,6 +143,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:textColor="@color/myrequest_second_text_color"
                         android:text="@string/date" />
 
                     <TextView
@@ -163,11 +151,12 @@
                         style="@style/NormalTextViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/myrequest_first_text_color"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:minHeight="48dp"
+                        android:minHeight="@dimen/request_item_min_height"
                         android:text="@string/request_date_time"
-                        app:drawableStartCompat="@drawable/ic_date" />
+                        app:drawableStartCompat="@drawable/ic_date"/>
                 </LinearLayout>
 
                 <!--line-->
@@ -184,6 +173,7 @@
                         style="@style/LabelStyle"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:textColor="@color/myrequest_second_text_color"
                         android:layout_weight="1"
                         android:text="@string/address" />
 
@@ -192,9 +182,10 @@
                         style="@style/NormalTextViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/myrequest_first_text_color"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:minHeight="48dp"
+                        android:minHeight="@dimen/request_item_min_height"
                         android:text="@string/address_ex"
                         app:drawableStartCompat="@drawable/ic_location" />
                 </LinearLayout>
@@ -215,6 +206,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="2"
+                        android:textColor="@color/myrequest_second_text_color"
                         android:text="@string/cost" />
 
                     <TextView
@@ -223,8 +215,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="2"
+                        android:textColor="@color/myrequest_first_text_color"
                         android:gravity="center"
-                        android:minHeight="48dp"
+                        android:minHeight="@dimen/request_item_min_height"
                         android:text="@string/cost_ex"
                         app:drawableStartCompat="@drawable/ic_money" />
                 </LinearLayout>
@@ -245,6 +238,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/myrequest_second_text_color"
                         android:text="@string/chat_with_provider" />
 
                     <ImageButton
@@ -272,13 +266,14 @@
                         style="@style/LabelStyle"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:textColor="@color/myrequest_second_text_color"
                         android:layout_weight="1"
                         android:text="@string/cancel" />
 
                     <ImageButton
                         android:id="@+id/requestCancelButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="@dimen/request_item_min_height"
                         android:layout_weight="1"
                         android:background="@drawable/done_button_status"
                         android:contentDescription="@string/cancel"
@@ -298,6 +293,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/done_button_status"
+                    android:textSize="@dimen/btn_text_size"
                     android:text="@string/done" />
 
             </LinearLayout>
@@ -322,7 +318,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="18dp"
+            android:layout_margin="@dimen/floating_button_margin"
             android:background="@color/navy_blue"
             android:contentDescription="@string/call_provider"
             android:src="@drawable/floating_call_button"

@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 <item>
     <shape android:shape="rectangle" >
-        <size android:height="65dp" android:width="65dp" />
+        <size android:height="@dimen/floating_button_height" android:width="@dimen/floating_button_width" />
         <gradient
             android:angle="135"
             android:endColor="@color/light_blue_200"
@@ -39,7 +39,7 @@
             android:right="2dp"/>
     </shape>
 </item>
-<item android:drawable="@drawable/ic_add" android:width="30dp" android:height="30dp" android:gravity="center">
+<item android:drawable="@drawable/ic_add" android:width="@dimen/floating_image_size" android:height="@dimen/floating_image_size" android:gravity="center">
 
 </item>
 </layer-list>

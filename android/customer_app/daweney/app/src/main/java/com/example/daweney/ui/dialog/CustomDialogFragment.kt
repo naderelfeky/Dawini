@@ -19,12 +19,13 @@ class CustomDialogFragment(private val msg:String, context: Context): DialogFrag
         dialogView.message.text=msg
         builder.setView(dialogView)
 
-        builder.setPositiveButton("OK") { dialog, which ->
+        builder.setPositiveButton(context?.getText(R.string.ok)) { dialog, which ->
             dialog.dismiss()
         }
 
         val dialog = builder.create()
-        dialog.window?.setBackgroundDrawableResource(R.color.navy_blue_400)
+        dialog.window?.setBackgroundDrawableResource(R.color.navy_blue_200)
+
 
         return dialog
     }

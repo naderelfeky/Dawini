@@ -1,6 +1,7 @@
 package com.example.daweney.ui.sendrequest
 
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +12,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SendRequestViewModel : ViewModel() {
-    private val sendRequestResponse = SendRequestRepository()
+class SendRequestViewModel(context: Context) : ViewModel() {
+    private val sendRequestResponse = SendRequestRepository(context)
     private val _sendRequestSuccess = MutableLiveData<Boolean>()
     private val _sendRequestInvalidError = MutableLiveData<Boolean>()
     private val _sendRequestNoProviderError = MutableLiveData<Boolean>()

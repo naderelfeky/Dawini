@@ -1,6 +1,7 @@
 package com.example.daweney.ui.resetpass
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,13 +9,14 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.example.daweney.R
 import com.example.daweney.pojo.resetpass.ResetPassword
 import com.example.daweney.ui.login.Login
 import com.example.daweney.ui.dialog.CustomDialogFragment
 import kotlinx.android.synthetic.main.activity_reset_password.*
 
-class ResetPassword : AppCompatActivity(), TextWatcher {
+class ResetPassword : LocalizationActivity(), TextWatcher {
 
     private lateinit var resetPassword: ResetPasswordViewModel
     private lateinit var email: String
@@ -26,17 +28,25 @@ class ResetPassword : AppCompatActivity(), TextWatcher {
 
         //watcher
         passwordEditText.addTextChangedListener(this)
-
-
-        resetPassword = ViewModelProvider(this)[ResetPasswordViewModel::class.java]
-        resetPassButton.setOnClickListener {
-            newPassword = passwordEditText.text.toString()
-            resetPassword.resetPassword(ResetPassword(email, newPassword))
-        }
+        viewModelInit()
+        resetPasswordClickListener()
         getDataFormIntent()
         progressBarObserve()
         dialogMessage()
         resetPasswordSuccessful()
+        setLightStatusBar()
+    }
+
+    private fun resetPasswordClickListener() {
+        resetPassButton.setOnClickListener {
+            newPassword = passwordEditText.text.toString()
+            resetPassword.resetPassword(ResetPassword(email, newPassword))
+        }
+    }
+
+    private fun viewModelInit() {
+        val resetPasswordViewModelFactory=ResetPasswordViewModelFactory(this)
+        resetPassword = ViewModelProvider(this,resetPasswordViewModelFactory)[ResetPasswordViewModel::class.java]
 
     }
 
@@ -48,6 +58,21 @@ class ResetPassword : AppCompatActivity(), TextWatcher {
             startActivity(intent)
             finish()
 
+        }
+    }
+
+    private fun setLightStatusBar() {
+        val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentTheme == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark theme
+            window.decorView.systemUiVisibility = 0
+
+        } else {
+            // Light theme
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
 
@@ -75,7 +100,6 @@ class ResetPassword : AppCompatActivity(), TextWatcher {
     private fun getDataFormIntent() {//get extra data form intent
 
         email = intent.getStringExtra("email").toString()
-        Log.d("resetpass", email)
     }
 
 

@@ -2,31 +2,32 @@ package com.example.daweney.ui.myrequestdetails
 
 import android.animation.Animator
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.example.daweney.R
 import com.example.daweney.pojo.intent_extra_key.IntentExtraKey
 import com.example.daweney.pojo.my_request_details.*
-import com.example.daweney.pojo.myreqests.RequestResponseItem
-import com.example.daweney.pojo.myreqests.Service
+import com.example.daweney.pojo.myrequests.RequestResponseItem
+import com.example.daweney.pojo.myrequests.Service
 import com.example.daweney.ui.dialog.CustomDialogFragment
+import com.example.daweney.ui.login.Login
 import com.example.daweney.ui.myrequests.MyRequests
 import kotlinx.android.synthetic.main.activity_my_request_details.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MyRequestDetails : AppCompatActivity(), RequestProviderInterface {
+class MyRequestDetails : LocalizationActivity(), RequestProviderInterface {
     private lateinit var  requestResponseItem:RequestResponseItem
     private lateinit var serviceType: TextView
     private lateinit var date: TextView
@@ -52,11 +53,7 @@ class MyRequestDetails : AppCompatActivity(), RequestProviderInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_request_details)
-        cancelRequestViewModel      = ViewModelProvider(this)[CancelRequestViewModel::class.java]
-        requestApplicationViewModel = ViewModelProvider(this)[RequestApplicationViewModel::class.java]
-        acceptProviderViewModel     =ViewModelProvider(this)[AcceptProviderViewModel::class.java]
-        rejectProviderViewModel     =ViewModelProvider(this)[RejectProviderViewModel::class.java]
-        doneViewModel               =ViewModelProvider(this)[DoneViewModel::class.java]
+        viewModelInit()
         initialization()
         progressBarObserve()
         requestCancelSuccessObserve()
@@ -74,12 +71,37 @@ class MyRequestDetails : AppCompatActivity(), RequestProviderInterface {
         rejectProviderFailureObserve()
         getDataFormIntent()
         cancelButton.setOnClickListener { onClick(it) }
+        goBack.setOnClickListener { onClick(it) }
         done_btn.setOnClickListener { onClick(it) }
         doneSuccessObserve()
         doneErrorObserve()
         doneFailureObserve()
+        setLightStatusBar()
 
+    }
 
+    private fun viewModelInit() {
+
+        cancelRequestViewModel      = ViewModelProvider(this)[CancelRequestViewModel::class.java]
+        requestApplicationViewModel = ViewModelProvider(this)[RequestApplicationViewModel::class.java]
+        acceptProviderViewModel     =ViewModelProvider(this)[AcceptProviderViewModel::class.java]
+        rejectProviderViewModel     =ViewModelProvider(this)[RejectProviderViewModel::class.java]
+        doneViewModel               =ViewModelProvider(this)[DoneViewModel::class.java]
+    }
+
+    private fun setLightStatusBar() {
+        val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentTheme == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark theme
+            window.decorView.systemUiVisibility = 0
+
+        } else {
+            // Light theme
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
     }
 
     private fun doneFailureObserve() {
@@ -113,6 +135,9 @@ class MyRequestDetails : AppCompatActivity(), RequestProviderInterface {
 
     private fun doneSuccessObserve() {
         doneViewModel.requestDone.observe(this){
+            val intent = Intent(this, MyRequests::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             finish()
         }
     }
@@ -233,7 +258,7 @@ class MyRequestDetails : AppCompatActivity(), RequestProviderInterface {
             when (requestStatus) {
                 "applied" -> {
                     requestProviderAdapter =
-                        RequestProviderAdapter(requestApplicationResponse, this)
+                        RequestProviderAdapter(this,requestApplicationResponse, this)
                     requestProviderApply.adapter=requestProviderAdapter
                 }
                 "Accepted" -> {   //response is one provider
@@ -301,6 +326,9 @@ class MyRequestDetails : AppCompatActivity(), RequestProviderInterface {
             }
             R.id.done_btn->{
                 doneViewModel.done(DoneBody(requestResponseItem._id))
+            }
+            R.id.goBack->{
+                finish()
             }
         }
     }

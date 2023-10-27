@@ -11,11 +11,11 @@ import retrofit2.Response
 
 class ServicesCategoryViewModel() : ViewModel() {
     private val servicesCategoryResponse = ServicesCategoryRepository()
-    private val _errorMessage = MutableLiveData<String>()
+    private val _errorMessage = MutableLiveData<Boolean>()
     private val _servicesCategory = MutableLiveData<ServicesCategoryResponse>()
     private val _progressBar = MutableLiveData<Boolean>()
     private val _failWithConnection = MutableLiveData<Boolean>()
-    val errorMessage: LiveData<String>
+    val errorMessage: LiveData<Boolean>
         get() = _errorMessage
     val servicesCategory: LiveData<ServicesCategoryResponse>
         get() = _servicesCategory
@@ -39,7 +39,7 @@ class ServicesCategoryViewModel() : ViewModel() {
 
                         }
                         else -> {
-                            _errorMessage.postValue("error with server try again ")
+                            _errorMessage.postValue(true)
                         }
                     }
                     _progressBar.postValue(false)
